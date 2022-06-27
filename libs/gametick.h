@@ -1,19 +1,18 @@
 #ifndef _QTHWK_GAMETICK_H_
 #define _QTHWK_GAMETICK_H_
 
+#include <ctime>
+
 #include <QMainWindow>
 #include "constants.h"
 #include "gamemap.h"
 #include "gamemath.h"
 #include "kbinput.h"
 
-const double eps = 1e-6;
-const double INF = 0x3f3f3f3f;
 
 namespace __gameTick
 {
-	
-	class player
+    class player
 	{
 	public:
 		// location 
@@ -26,16 +25,23 @@ namespace __gameTick
 		int jumpCoolDown; 
 		// is in Dash 
 		bool inDash; 
-		
+        // initialize player
+        // TODO:
+        // Hp, Mp
+        // Special CD (if have)
+        // ...
 		void initialize()
 		{
 			vX = 0, vY = 0;
 			jumpCount = 0, jumpCoolDown = 0;
 			inDash = false;
+            // TODO:
+            // X=? y=?
 		}
 		
 		enum direction
 		{LEFT, RIGHT, UP, DOWN};
+        // add speed to the player
 		void addMove(const direction movDir)
 		{
 			if(movDir == LEFT)
@@ -80,14 +86,12 @@ namespace __gameTick
 				}
 			}
 		}
+        // check if a real position is in block
         bool checkinblock(double X,double Y)
         {
             return (unsigned int)gameMap.getBlockType(int(X),int(Y)) == 1;
         }
-        double div(double x,double y)
-        {
-            return fabs(y)<eps?(INF):(x/y);
-        }
+        // fix player position when hitting blocks
         void fixStatus(double LX,double LY)
 		{
             if(checkinblock(posX,posY) && checkinblock(posX+playerheight,posY))
@@ -183,15 +187,21 @@ namespace __gameTick
                 }
             }
 		}
-		bool onGround()
+        // check if the player is on ground
+        bool onGround()
 		{
             if(checkinblock(posX,posY-eps)||checkinblock(posX+playerheight,posY-eps))return true;
             return false;
 		}
+        // decrease X exponently
+        void diminishX()
+        {
+            vX = vX / alphaX;
+        }
 		void move()
 		{
 			if(jumpCoolDown) jumpCoolDown--;
-			
+
             double LposX = posX,LposY = posY;
 			posX += vX / tps, posY += vY / tps;
 			
@@ -199,19 +209,15 @@ namespace __gameTick
 			if(onGround())jumpCount = 0;
 		}
 	}P1, P2;
-	void begin()
-	{
-		keyboardStatus.clear();
-		P1.initialize();
-		P2.initialize();
-	}
-	void tick()
+    enum gameStatusEnum{menu,inGame,endGame}gameStatus;
+    void tick()
 	{
 		// player speed update 
 		if(keyboardStatus.l1&&!keyboardStatus.r1)
             P1.addMove(player::LEFT);
-		if(keyboardStatus.r1&&!keyboardStatus.l1)
+        else if(keyboardStatus.r1&&!keyboardStatus.l1)
             P1.addMove(player::RIGHT);
+        else P1.diminishX();
 		if(keyboardStatus.u1&&!keyboardStatus.d1)
             P1.addMove(player::UP);
 		if(keyboardStatus.d1&&!keyboardStatus.u1)
@@ -219,8 +225,9 @@ namespace __gameTick
 		 
 		if(keyboardStatus.l2&&!keyboardStatus.r2)
             P2.addMove(player::LEFT);
-		if(keyboardStatus.r2&&!keyboardStatus.l2)
+        else if(keyboardStatus.r2&&!keyboardStatus.l2)
             P2.addMove(player::RIGHT);
+        else P2.diminishX();
 		if(keyboardStatus.u2&&!keyboardStatus.d2)
             P2.addMove(player::UP);
 		if(keyboardStatus.d2&&!keyboardStatus.u2)
@@ -234,10 +241,40 @@ namespace __gameTick
 		// TODO 
 		
 		// rendering new graphics 
+        // (maybe not implemented here?)
 		// TODO 
 	}
+    void startGame()
+    {
+        keyboardStatus.clear();
+        P1.initialize();
+        P2.initialize();
+        gameStatus = inGame;
+        int lastTickTime = clock();
+        while(true)
+        {
+            if(gameStatus != inGame) break;
+            int __Time = int(clock());
+            if(__Time >= lastTickTime + int(CLOCKS_PER_SEC / tps))
+            {
+                lastTickTime = __Time;
+                tick();
+            }
+        }
+    }
+    void backToMenu()
+    {
+        // TODO
+    }
+    void pauseGame()
+    {
+        // TODO
+    }
 }
-using __gameTick::begin;
-using __gameTick::tick;
+using __gameTick::gameStatusEnum;
+using __gameTick::gameStatus;
+using __gameTick::startGame;
+using __gameTick::backToMenu;
+using __gameTick::pauseGame;
 
-#endif
+#endif // _QTHWK_GAMETICK_H_

@@ -40,14 +40,5 @@ namespace __kbInput
 	}keyboardStatus;
 }
 using __kbInput::keyboardStatus;
-void QWidget::keyPressEvent(QKeyEvent *ev)
-{
-	keyboardStatus.update(ev, true);
-}
-void QWidget::keyReleaseEvent(QKeyEvent *ev)
-{
-	keyboardStatus.update(ev, false);
-}
 
-
-#endif
+#endif // _QTHWK_KBINPUT_H_

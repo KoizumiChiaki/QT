@@ -5,13 +5,21 @@
 
 namespace __gameMath
 {
-	const double eps = 1e-7;
+    const double eps = 1e-6;
+    const double INF = 0x3f3f3f3f;
 	
 	bool isInteger(const double v)
 	{
-		return std::fabs(v-int(v+eps)) < 1e-5;
+        return std::fabs(v-int(v+eps)) < eps;
 	}
-	
+    double div(double x,double y)
+    {
+        return fabs(y)<eps?(INF):(x/y);
+    }
 }
+using __gameMath::eps;
+using __gameMath::INF;
+using __gameMath::isInteger;
+using __gameMath::div;
 
-#endif
+#endif // _QTHWK_GAMEMATH_H_

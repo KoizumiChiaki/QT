@@ -71,4 +71,4 @@ namespace __gameMap
 }
 using __gameMap::gameMap;
 
-#endif
+#endif // _QTHWK_GAMEMAP_H_
