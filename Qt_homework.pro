@@ -13,7 +13,12 @@ SOURCES += \
     mainwindow.cpp
 
 HEADERS += \
-    mainwindow.h
+    libs/constants.h \
+    libs/gamemap.h \
+    libs/gamemath.h \
+    libs/gametick.h \
+    libs/kbinput.h \
+    mainwindow.h \
 
 FORMS += \
     mainwindow.ui
