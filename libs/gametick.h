@@ -82,7 +82,7 @@ namespace __gameTick
 		}
         bool checkinblock(double X,double Y)
         {
-            return getBlockType(int(X),int(Y))==1;
+            return (unsigned int)gameMap.getBlockType(int(X),int(Y)) == 1;
         }
         double div(double x,double y)
         {
