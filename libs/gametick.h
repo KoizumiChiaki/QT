@@ -2,10 +2,13 @@
 #define _QTHWK_GAMETICK_H_
 
 #include <QMainWindow>
-#include "contants.h"
+#include "constants.h"
 #include "gamemap.h"
 #include "gamemath.h"
 #include "kbinput.h"
+
+const double eps = 1e-6;
+const double INF = 0x3f3f3f3f;
 
 namespace __gameTick
 {
@@ -77,27 +80,122 @@ namespace __gameTick
 				}
 			}
 		}
-		bool crashIntoBlock()
+        bool checkinblock(double X,double Y)
+        {
+            return getBlockType(int(X),int(Y))==1;
+        }
+        double div(double x,double y)
+        {
+            return fabs(y)<eps?(INF):(x/y);
+        }
+        void fixStatus(double LX,double LY)
 		{
-			// TODO 
-		}
-		void fixStatus()
-		{
-			// TODO 
+            if(checkinblock(posX,posY) && checkinblock(posX+playerheight,posY))
+            {
+                posY = int(posY) + 1;
+                if(vY<0)vY = 0;//Down
+                return;
+            }
+            if(checkinblock(posX,posY+playerheight) && checkinblock(posX+playerheight,posY+playerheight))
+            {
+                posY = int(posY+playerheight) - playerheight;
+                if(vY>0)vY = 0;//Up
+                return;
+            }
+            if(checkinblock(posX,posY) && checkinblock(posX,posY+playerheight))
+            {
+                posX = int(posX) + 1;
+                if(vX<0)vX = 0;//Left
+                return;
+            }
+            if(checkinblock(posX+playerheight,posY) && checkinblock(posX+playerheight,posY+playerheight))
+            {
+                posX = int(posX+playerheight) - playerheight;
+                if(vX>0)vX = 0;//Right
+                return;
+            }
+            if(checkinblock(posX,posY))//leftdown
+            {
+                double L=int(posY)+1;
+                double tmp=LX+(L-LY)*div(LX-posX,LY-posY);
+                if(tmp>=int(posX)&&tmp<=int(posX)+1)
+                {
+                    posY=L;
+                    if(vY<0)vY=0;
+                    return;
+                }
+                else
+                {
+                    posX=int(posX)+1;
+                    if(vX<0)vX=0;
+                    return;
+                }
+            }
+            if(checkinblock(posX,posY+playerheight))//leftup
+            {
+                double L=int(posY+playerheight);
+                double tmp=LX+(L-LY-playerheight)*div(LX-posX,LY-posY);
+                if(tmp>=int(posX)&&tmp<=int(posX)+1)
+                {
+                    posY=L-playerheight;
+                    if(vY>0)vY=0;
+                    return;
+                }
+                else
+                {
+                    posX=int(posX)+1;
+                    if(vX<0)vX=0;
+                    return;
+                }
+            }
+            if(checkinblock(posX+playerheight,posY))//rightdown
+            {
+                double L=int(posY)+1;
+                double tmp=LX+playerheight+(L-LY)*div(LX-posX,LY-posY);
+                if(tmp>=int(posX+playerheight)&&tmp<=int(posX+playerheight)+1)
+                {
+                    posY=L;
+                    if(vY<0)vY=0;
+                    return;
+                }
+                else
+                {
+                    posX=int(posX+playerheight)-playerheight;
+                    if(vX>0)vX=0;
+                    return;
+                }
+            }
+            if(checkinblock(posX+playerheight,posY+playerheight))//rightup
+            {
+                double L=int(posY+playerheight);
+                double tmp=LX+playerheight+(L-LY)*div(LX-posX,LY-posY);
+                if(tmp>=int(posX+playerheight)&&tmp<=int(posX+playerheight)+1)
+                {
+                    posY=L-playerheight;
+                    if(vY>0)vY=0;
+                    return;
+                }
+                else
+                {
+                    posX=int(posX+playerheight)-playerheight;
+                    if(vX>0)vX=0;
+                    return;
+                }
+            }
 		}
 		bool onGround()
 		{
-			// TODO 
+            if(checkinblock(posX,posY-eps)||checkinblock(posX+playerheight,posY-eps))return true;
+            return false;
 		}
 		void move()
 		{
 			if(jumpCoolDown) jumpCoolDown--;
 			
+            double LposX = posX,LposY = posY;
 			posX += vX / tps, posY += vY / tps;
 			
-			if(crashIntoBlock())
-				fixStatus();
-			
+            fixStatus(LposX,LposY);
 			if(onGround())jumpCount = 0;
 		}
 	}P1, P2;

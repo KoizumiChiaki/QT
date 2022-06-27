@@ -14,6 +14,7 @@ const double normalSpeedLimit = 6;
 const double dashSpeedLimit = 9;
 const double verticalSpeedLimit = 6;
 // jump cd 
+const double playerheight = 0.8125;
 const unsigned int jumpCoolDownTicks = 10;
 
 #endif
