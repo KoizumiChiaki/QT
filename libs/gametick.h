@@ -209,22 +209,22 @@ namespace __gameTick
 	{
 		// player speed update 
 		if(keyboardStatus.l1&&!keyboardStatus.r1)
-			P1.addMove(LEFT);
+            P1.addMove(player::LEFT);
 		if(keyboardStatus.r1&&!keyboardStatus.l1)
-			P1.addMove(RIGHT);
+            P1.addMove(player::RIGHT);
 		if(keyboardStatus.u1&&!keyboardStatus.d1)
-			P1.addMove(UP);
+            P1.addMove(player::UP);
 		if(keyboardStatus.d1&&!keyboardStatus.u1)
-			P1.addMove(DOWN);
+            P1.addMove(player::DOWN);
 		 
 		if(keyboardStatus.l2&&!keyboardStatus.r2)
-			P2.addMove(LEFT);
+            P2.addMove(player::LEFT);
 		if(keyboardStatus.r2&&!keyboardStatus.l2)
-			P2.addMove(RIGHT);
+            P2.addMove(player::RIGHT);
 		if(keyboardStatus.u2&&!keyboardStatus.d2)
-			P2.addMove(UP);
+            P2.addMove(player::UP);
 		if(keyboardStatus.d2&&!keyboardStatus.u2)
-			P2.addMove(DOWN);
+            P2.addMove(player::DOWN);
 		
 		// player moving 
 		P1.move();
@@ -237,7 +237,7 @@ namespace __gameTick
 		// TODO 
 	}
 }
-using __gameTick::begin();
-using __gameTick::tick();
+using __gameTick::begin;
+using __gameTick::tick;
 
 #endif

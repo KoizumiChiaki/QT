@@ -2,6 +2,7 @@
 #define _QTHWK_KBINPUT_H_
 
 #include <QMainWindow>
+#include <QKeyEvent>
 
 namespace __kbInput
 {
@@ -20,21 +21,21 @@ namespace __kbInput
 		void update(QKeyEvent *ev, bool Now)
 		{
 			if(ev -> key() == Qt::Key_A)
-				keyboardStatus.l1 = Now;
+                l1 = Now;
 			if(ev -> key() == Qt::Key_D)
-				keyboardStatus.r1 = Now;
+                r1 = Now;
 			if(ev -> key() == Qt::Key_W)
-				keyboardStatus.u1 = Now;
+                u1 = Now;
 			if(ev -> key() == Qt::Key_S)
-				keyboardStatus.d1 = Now;
+                d1 = Now;
 			if(ev -> key() == Qt::Key_Left)
-				keyboardStatus.l2 = Now;
+                l2 = Now;
 			if(ev -> key() == Qt::Key_Right)
-				keyboardStatus.r2 = Now;
+                r2 = Now;
 			if(ev -> key() == Qt::Key_Up)
-				keyboardStatus.u2 = Now;
+                u2 = Now;
 			if(ev -> key() == Qt::Key_Down)
-				keyboardStatus.d2 = Now;
+                d2 = Now;
 		}
 	}keyboardStatus;
 }
