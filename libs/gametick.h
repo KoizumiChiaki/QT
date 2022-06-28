@@ -15,6 +15,22 @@ using namespace std;
 
 namespace __gameTick
 {
+    class bullet
+    {
+    public:
+        double posX, posY;
+        double vX, vY;
+        double gra;
+        int owner;
+        void move()
+        {
+            posX+=vX/tps;
+            posY+=vY/tps;
+            vY+=gra/tps;
+        }
+    };
+    list<bullet>L;
+
     class player
 	{
 	public:
@@ -224,6 +240,11 @@ namespace __gameTick
             fixStatus(LposX,LposY);
 			if(onGround())jumpCount = 0;
 		}
+        void Toss(int tmp)
+        {
+            if(HurtCd)return;
+            L.push_back((bullet){posX+playerheight/2,posY+playerheight/2,TossSpeed,0,gravity,tmp});
+        }
         QImage GetPlayerState()
         {
             QImage ret(screenWidth * 16, screenHeight * 16, QImage::Format_RGBA8888);
@@ -271,14 +292,19 @@ namespace __gameTick
 		if(keyboardStatus.d2&&!keyboardStatus.u2)
             P2.addMove(player::DOWN);
 		
+        // player skill
+        if(keyboardStatus.toss1)P1.Toss(1);
+        if(keyboardStatus.toss2)P2.Toss(2);
+        if(keyboardStatus.shoot1)P1.Shoot(1);
+        if(keyboardStatus.shoot2)P2.Shoot(2);
+        if(keyboardStatus.dash1)P1.Dash();
+        if(keyboardStatus.dash2)P2.Dash();
+
 		// player moving 
         P1.updatedirection();
         P2.updatedirection();
 		P1.move();
 		P2.move();
-		
-		// player attack 
-		// TODO 
 		
 		// rendering new graphics 
         // (maybe not implemented here?)
