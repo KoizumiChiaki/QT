@@ -1,10 +1,12 @@
 #ifndef _QTHWK_CONSTANTS_H_
 #define _QTHWK_CONSTANTS_H_
 
+const int timePerTick = 5;
+//the number of ms per tick
 const int screenWidth = 48, screenHeight = 36;
 const unsigned int tps = 20;
 // gravity (vY diminishing speed per second) 
-const double gravity = 30;
+const double gravity = 15;
 // speed det per second 
 const double normalSpeed = 15;
 const double dashSpeed = 30;

@@ -60,8 +60,8 @@ void MainWindow::paintEvent(QPaintEvent *)
 void MainWindow::startGame()
 {
     keyboardStatus.clear();
-    __gameTick::P1.initialize(1, 16 - 0.5 * playerheight, 18);
-    __gameTick::P2.initialize(0, 32 - 0.5 * playerheight, 18);
+    __gameTick::P1.initialize(1, screenWidth / 3 * 1 - 0.5 * playerheight, screenHeight - 1);
+    __gameTick::P2.initialize(0, screenWidth / 3 * 2 - 0.5 * playerheight, screenHeight - 1);
     __gameTick::gameStatus = inGame;
     setTheme(desert);//Just for testing
     gameMap.mapInit();
@@ -74,7 +74,7 @@ void MainWindow::GlobalTick()
         __gameTick::tick();
         repaint();
     }
-    gameClock->start(10);
+    gameClock->start(timePerTick);
 }
 void MainWindow::backToMenu()
 {
@@ -94,7 +94,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     setFixedSize(1280,960);
-    gameClock->start(10);
+    gameClock->start(timePerTick);
     connect(gameClock, SIGNAL(timeout()), this, SLOT(GlobalTick()));
 }
 
