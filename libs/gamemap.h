@@ -60,7 +60,7 @@ namespace __gameMap
                 return solid;
             return sta[y][x];//0:empty, 1:solid, 2:liquid, 3:platform
         }
-        QImage getWholeMap() //print the whole map
+        QImage getWholeMapSolid() //print the whole map
         {
             QImage ret(screenWidth * 16, screenHeight * 16, QImage::Format_RGBA8888);
             QPixmap tmp;
@@ -69,10 +69,34 @@ namespace __gameMap
             {
                 for (int j = 0; j < screenWidth; j++)
                 {
-                    tmp.load((dir2 + std::to_string(map[i][j]) + ".png").c_str());
-                    painter.drawPixmap(j * 16, (screenHeight - 1 - i) * 16, 16, 16, tmp);
+                    if (sta[i][j] != liquid)
+                    {
+                        tmp.load((dir2 + std::to_string(map[i][j]) + ".png").c_str());
+                        painter.drawPixmap(j * 16, (screenHeight - 1 - i) * 16, 16, 16, tmp);
+                    }
                 }
             }
+            return ret;
+        }
+        QImage getWholeMapLiquid() //print the whole map
+        {
+            QImage ret(screenWidth * 16, screenHeight * 16, QImage::Format_RGBA8888);
+            QPixmap tmp;
+            QPainter painter(&ret);
+            painter.setCompositionMode(QPainter::CompositionMode_Source);
+            for (int i = 0; i < screenHeight; i++)
+            {
+                for (int j = 0; j < screenWidth; j++)
+                {
+                    if (sta[i][j] == liquid)
+                    {
+                        tmp.load((dir2 + std::to_string(map[i][j]) + ".png").c_str());
+                        painter.drawPixmap(j * 16, (screenHeight - 1 - i) * 16, 16, 16, tmp);
+                    }
+                }
+            }
+            painter.setCompositionMode(QPainter::CompositionMode_DestinationIn);
+            painter.fillRect(ret.rect(), QColor(0, 0, 0, 200));
             return ret;
         }
     }gameMap;
