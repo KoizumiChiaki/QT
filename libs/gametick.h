@@ -42,10 +42,10 @@ namespace __gameTick
         // player skill
         if(keyboardStatus.toss1)P1.Toss(1);
         if(keyboardStatus.toss2)P2.Toss(2);
-       // if(keyboardStatus.shoot1)P1.Shoot(1);
-       // if(keyboardStatus.shoot2)P2.Shoot(2);
-       // if(keyboardStatus.dash1)P1.Dash();
-       // if(keyboardStatus.dash2)P2.Dash();
+        if(keyboardStatus.shoot1)P1.Shoot(1);
+        if(keyboardStatus.shoot2)P2.Shoot(2);
+        if(keyboardStatus.dash1)P1.Dash(keyboardStatus.l1,keyboardStatus.r1);
+        if(keyboardStatus.dash2)P2.Dash(keyboardStatus.l2,keyboardStatus.r2);
 
 		// player moving 
         P1.updatedirection();
