@@ -2,7 +2,6 @@
 #define _QTHWK_GAMETICK_H_
 
 #include <ctime>
-
 #include <QImage>
 #include <QPixmap>
 #include <QPainter>
@@ -11,16 +10,35 @@
 #include "gamemap.h"
 #include "gamemath.h"
 #include "kbinput.h"
-using namespace std;
-
+#include "player.h"
 
 namespace __gameTick
 {
+<<<<<<< HEAD
+    enum gameStatusEnum{menu,inGame,endGame}gameStatus;
+=======
+    class bullet
+    {
+    public:
+        double posX, posY;
+        double vX, vY;
+        double gra;
+        int owner;
+        void move()
+        {
+            posX+=vX/tps;
+            posY+=vY/tps;
+            vY+=gra/tps;
+        }
+    };
+    list<bullet>L;
+
     class player
 	{
 	public:
         // Hp
         int Hp,Mp;
+        bool Direction;//0 Left 1 Right
         // location
 		double posX, posY;
 		// velocity (blocks per second) 
@@ -37,8 +55,9 @@ namespace __gameTick
         // Hp, Mp
         // Special CD (if have)
         // ...
-		void initialize()
+        void initialize(int D,int X,int Y)
 		{
+            posX = X,posY = Y,Direction = D;
 			vX = 0, vY = 0;
 			jumpCount = 0, jumpCoolDown = 0;
             Hp = MaxHp , Mp = MaxMp;
@@ -88,7 +107,7 @@ namespace __gameTick
 			{
 				if(jumpCoolDown == 0 && jumpCount != 2)
 				{
-					vY += jumpSpeed;
+                    vY = jumpSpeed;
 					if(vY > verticalSpeedLimit)
 						vY = verticalSpeedLimit;
 					jumpCount++;
@@ -197,6 +216,11 @@ namespace __gameTick
                 }
             }
 		}
+        void updatedirection()
+        {
+            if(Direction==1&&vX<0)Direction=0;
+            if(Direction==0&&vX>0)Direction=1;
+        }
         // check if the player is on ground
         bool onGround()
 		{
@@ -213,11 +237,16 @@ namespace __gameTick
 			if(jumpCoolDown) jumpCoolDown--;
             if(HurtCd) HurtCd--;
             double LposX = posX,LposY = posY;
-			posX += vX / tps, posY += vY / tps;
-			
+            posX += vX / tps, posY += vY / tps;
+            vY -= gravity / tps;
             fixStatus(LposX,LposY);
 			if(onGround())jumpCount = 0;
 		}
+        void Toss(int tmp)
+        {
+            if(HurtCd)return;
+            L.push_back((bullet){posX+playerheight/2,posY+playerheight/2,TossSpeed,0,gravity,tmp});
+        }
         QImage GetPlayerState()
         {
             QImage ret(screenWidth * 16, screenHeight * 16, QImage::Format_RGBA8888);
@@ -231,44 +260,54 @@ namespace __gameTick
                 else dir+="fall";
             }
             else dir+="stay";
-            QPixmap tmp;
+            QImage tmp;
             tmp.load((dir+".png").c_str());
+            if (Direction == 0)
+                tmp = tmp.mirrored(true, false);
             QPainter painter(&ret);
-            painter.drawPixmap((int)round(posX * 16), (int)round((screenHeight - posY) * 16) - 16 * playerheight, 16 * playerheight, 16 * playerheight, tmp);
+            painter.drawPixmap((int)round(posX * 16), (int)round((screenHeight - posY) * 16) - 16 * playerheight, 16 * playerheight, 16 * playerheight, QPixmap::fromImage(tmp));
             return ret;
         }
 
 	}P1, P2;
-    enum gameStatusEnum{menu,inGame,endGame}gameStatus;
+    enum gameStatusEnum{menu,inGame,endGame}gameStatus = menu;
+>>>>>>> 461d2c9452bdc0b54489c7f520c66ec1608af43a
     void tick()
 	{
 		// player speed update 
 		if(keyboardStatus.l1&&!keyboardStatus.r1)
-            P1.addMove(player::LEFT);
+            P1.addMove(LEFT);
         else if(keyboardStatus.r1&&!keyboardStatus.l1)
-            P1.addMove(player::RIGHT);
+            P1.addMove(RIGHT);
         else P1.diminishX();
 		if(keyboardStatus.u1&&!keyboardStatus.d1)
-            P1.addMove(player::UP);
+            P1.addMove(UP);
 		if(keyboardStatus.d1&&!keyboardStatus.u1)
-            P1.addMove(player::DOWN);
+            P1.addMove(DOWN);
 		 
 		if(keyboardStatus.l2&&!keyboardStatus.r2)
-            P2.addMove(player::LEFT);
+            P2.addMove(LEFT);
         else if(keyboardStatus.r2&&!keyboardStatus.l2)
-            P2.addMove(player::RIGHT);
+            P2.addMove(RIGHT);
         else P2.diminishX();
 		if(keyboardStatus.u2&&!keyboardStatus.d2)
-            P2.addMove(player::UP);
+            P2.addMove(UP);
 		if(keyboardStatus.d2&&!keyboardStatus.u2)
-            P2.addMove(player::DOWN);
+            P2.addMove(DOWN);
 		
+        // player skill
+        if(keyboardStatus.toss1)P1.Toss(1);
+        if(keyboardStatus.toss2)P2.Toss(2);
+       // if(keyboardStatus.shoot1)P1.Shoot(1);
+       // if(keyboardStatus.shoot2)P2.Shoot(2);
+       // if(keyboardStatus.dash1)P1.Dash();
+       // if(keyboardStatus.dash2)P2.Dash();
+
 		// player moving 
+        P1.updatedirection();
+        P2.updatedirection();
 		P1.move();
 		P2.move();
-		
-		// player attack 
-		// TODO 
 		
 		// rendering new graphics 
         // (maybe not implemented here?)

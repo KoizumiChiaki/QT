@@ -2,7 +2,6 @@
 #define _QTHWK_GAMETICK_H_
 
 #include <ctime>
-
 #include <QImage>
 #include <QPixmap>
 #include <QPainter>
@@ -15,7 +14,8 @@
 
 namespace __gameTick
 {
-    enum gameStatusEnum{menu,inGame,endGame}gameStatus;
+
+    enum gameStatusEnum{menu,inGame,endGame}gameStatus = menu;
     void tick()
 	{
 		// player speed update 
@@ -39,12 +39,19 @@ namespace __gameTick
 		if(keyboardStatus.d2&&!keyboardStatus.u2)
             P2.addMove(DOWN);
 		
+        // player skill
+        if(keyboardStatus.toss1)P1.Toss(1);
+        if(keyboardStatus.toss2)P2.Toss(2);
+       // if(keyboardStatus.shoot1)P1.Shoot(1);
+       // if(keyboardStatus.shoot2)P2.Shoot(2);
+       // if(keyboardStatus.dash1)P1.Dash();
+       // if(keyboardStatus.dash2)P2.Dash();
+
 		// player moving 
+        P1.updatedirection();
+        P2.updatedirection();
 		P1.move();
 		P2.move();
-		
-		// player attack 
-		// TODO 
 		
 		// rendering new graphics 
         // (maybe not implemented here?)

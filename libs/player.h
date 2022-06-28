@@ -8,11 +8,28 @@ namespace __player
 {
     enum direction
     {LEFT, RIGHT, UP, DOWN};
+    class bullet
+    {
+    public:
+        double posX, posY;
+        double vX, vY;
+        double gra;
+        int owner;
+        void move()
+        {
+            posX+=vX/tps;
+            posY+=vY/tps;
+            vY+=gra/tps;
+        }
+    };
+    std::list<bullet>L;
+
     class player
     {
     public:
         // Hp
         int Hp,Mp;
+        bool Direction;//0 Left 1 Right
         // location
         double posX, posY;
         // velocity (blocks per second)
@@ -29,14 +46,13 @@ namespace __player
         // Hp, Mp
         // Special CD (if have)
         // ...
-        void initialize()
+        void initialize(int D,int X,int Y)
         {
+            posX = X,posY = Y,Direction = D;
             vX = 0, vY = 0;
             jumpCount = 0, jumpCoolDown = 0;
             Hp = MaxHp , Mp = MaxMp;
             inDash = false;
-            // TODO:
-            // X=? y=?
         }
 
         // add speed to the player
@@ -77,7 +93,7 @@ namespace __player
             {
                 if(jumpCoolDown == 0 && jumpCount != 2)
                 {
-                    vY += jumpSpeed;
+                    vY = jumpSpeed;
                     if(vY > verticalSpeedLimit)
                         vY = verticalSpeedLimit;
                     jumpCount++;
@@ -186,6 +202,11 @@ namespace __player
                 }
             }
         }
+        void updatedirection()
+        {
+            if(Direction==1&&vX<0)Direction=0;
+            if(Direction==0&&vX>0)Direction=1;
+        }
         // check if the player is on ground
         bool onGround()
         {
@@ -203,9 +224,14 @@ namespace __player
             if(HurtCd) HurtCd--;
             double LposX = posX,LposY = posY;
             posX += vX / tps, posY += vY / tps;
-
+            vY -= gravity / tps;
             fixStatus(LposX,LposY);
             if(onGround())jumpCount = 0;
+        }
+        void Toss(int tmp)
+        {
+            if(HurtCd)return;
+            L.push_back((bullet){posX+playerheight/2,posY+playerheight/2,TossSpeed,0,gravity,tmp});
         }
         QImage GetPlayerState()
         {
@@ -220,12 +246,15 @@ namespace __player
                 else dir+="fall";
             }
             else dir+="stay";
-            QPixmap tmp;
+            QImage tmp;
             tmp.load((dir+".png").c_str());
+            if (Direction == 0)
+                tmp = tmp.mirrored(true, false);
             QPainter painter(&ret);
-            painter.drawPixmap((int)round(posX * 16), (int)round((screenHeight - posY) * 16) - 16 * playerheight, 16 * playerheight, 16 * playerheight, tmp);
+            painter.drawPixmap((int)round(posX * 16), (int)round((screenHeight - posY) * 16) - 16 * playerheight, 16 * playerheight, 16 * playerheight, QPixmap::fromImage(tmp));
             return ret;
         }
+
     }P1, P2;
 }
 
