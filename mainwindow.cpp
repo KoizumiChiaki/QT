@@ -48,11 +48,32 @@ void MainWindow::paintEvent(QPaintEvent *)
     if (gameStatus == __gameTick::inGame)//
     {
         QPixmap map = QPixmap::fromImage(gameMap.getWholeMap());
-        QPixmap p1 = QPixmap::fromImage(P1.GetPlayerState());
-        QPixmap p2 = QPixmap::fromImage(P2.GetPlayerState());
-        painter.drawPixmap(0, 0, MainWindow::width(), MainWindow::height(), map);
-        painter.drawPixmap(0, 0, MainWindow::width(), MainWindow::height(), p1);
-        painter.drawPixmap(0, 0, MainWindow::width(), MainWindow::height(), p2);
+        QPixmap p1 = QPixmap::fromImage(__player::P1.GetPlayerState());
+        QPixmap p2 = QPixmap::fromImage(__player::P2.GetPlayerState());
+        int r1 = __player::P1.GetPlayerHPRate(), r2 = __player::P2.GetPlayerHPRate();
+        QImage result(screenWidth * 16, screenHeight * 16, QImage::Format_RGBA8888);
+        QPainter temp(&result);
+
+        temp.drawPixmap(0, 0, map);// paint the map
+        temp.drawPixmap(0, 0, p1);// paint player1
+        temp.drawPixmap(0, 0, p2);// paint player2
+
+        QPen pen;
+        pen.setColor(QColor(0, 0, 0, 255));
+        QBrush brush;
+        brush.setColor(QColor(125, 45, 45, 255));
+        brush.setStyle(Qt::SolidPattern);
+        temp.setPen(pen), temp.setBrush(brush);
+        temp.drawRect(20, 20, 200, 8);
+        temp.drawRect(screenWidth * 16 - 221, 20, 200, 8);
+        //paint HP(empty ver)
+        brush.setColor(QColor(255, 0, 0, 255));
+        temp.setBrush(brush);
+        temp.drawRect(20, 20, 2 * r1, 8);
+        temp.drawRect(screenWidth * 16 - 21 - 2 * r2, 20, 2 * r2, 8);
+        //paint HP(full ver)
+        painter.drawPixmap(0, 0, MainWindow::width(), MainWindow::height(), QPixmap::fromImage(result));
+        //print
     }
 }
 
@@ -60,8 +81,8 @@ void MainWindow::paintEvent(QPaintEvent *)
 void MainWindow::startGame()
 {
     keyboardStatus.clear();
-    P1.initialize(1, screenWidth / 3 * 1 - 0.5 * playerheight, screenHeight - 1);
-    P2.initialize(0, screenWidth / 3 * 2 - 0.5 * playerheight, screenHeight - 1);
+    __player::P1.initialize(1, screenWidth / 3 * 1 - 0.5 * playerheight, screenHeight - 1);
+    __player::P2.initialize(0, screenWidth / 3 * 2 - 0.5 * playerheight, screenHeight - 1);
     __gameTick::gameStatus = inGame;
     setTheme(desert);//Just for testing
     gameMap.mapInit();
