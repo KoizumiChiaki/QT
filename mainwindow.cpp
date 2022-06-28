@@ -35,9 +35,14 @@ void MainWindow::keyReleaseEvent(QKeyEvent *ev)
 }
 void MainWindow::paintEvent(QPaintEvent *)
 {
-
     QPainter painter(this);
-    if (true)//
+    if (gameStatus == __gameTick::menu)
+    {
+        QPixmap bg(MainWindow::width(), MainWindow::height());
+        bg.fill(Qt::white);
+        painter.drawPixmap(0, 0, MainWindow::width(), MainWindow::height(), bg);
+    }
+    if (gameStatus == __gameTick::inGame)//
     {
         setTheme(desert);//Just for testing
         gameMap.mapInit();
