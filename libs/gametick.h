@@ -38,8 +38,9 @@ namespace __gameTick
         // Hp, Mp
         // Special CD (if have)
         // ...
-		void initialize()
+        void initialize(int D,int X,int Y)
 		{
+            posX = X,posY = Y,Direction = D;
 			vX = 0, vY = 0;
 			jumpCount = 0, jumpCoolDown = 0;
             Hp = MaxHp , Mp = MaxMp;
