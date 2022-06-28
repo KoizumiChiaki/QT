@@ -11,7 +11,7 @@ namespace __player
     {LEFT, RIGHT, UP, DOWN};
     class bullet
     {
-    public:
+        public:
         double posX, posY;
         double vX, vY;
         double gra;
@@ -21,6 +21,10 @@ namespace __player
             posX+=vX/tps;
             posY+=vY/tps;
             vY+=gra/tps;
+        }
+        bool checkinblock()
+        {
+            return gameMap.getBlockType(int(posX),int(posY)) == solid;
         }
     };
     std::list<bullet>L;
@@ -302,6 +306,8 @@ namespace __player
     }P1, P2;
 }
 
+using __player::bullet;
+using __player::L;
 using __player::P1;
 using __player::P2;
 using __player::direction;
