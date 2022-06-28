@@ -3,6 +3,7 @@
 
 #include "gamemap.h"
 #include "gamemath.h"
+#include <QDebug>
 
 namespace __player
 {
@@ -94,8 +95,6 @@ namespace __player
                 if(jumpCoolDown == 0 && jumpCount != 2)
                 {
                     vY = jumpSpeed;
-                    if(vY > verticalSpeedLimit)
-                        vY = verticalSpeedLimit;
                     jumpCount++;
                     jumpCoolDown = jumpCoolDownTicks;
                 }
@@ -103,8 +102,6 @@ namespace __player
             if(movDir == DOWN)
             {
                 vY -= normalSpeed / tps;
-                if(vY < -verticalSpeedLimit)
-                    vY = -verticalSpeedLimit;
             }
         }
         // check if a real position is in block
@@ -162,26 +159,6 @@ namespace __player
                 }
                 return;
             }
-            if(p3)//leftup
-            {
-                double L1=int(posY+playerheight),L2=int(posX)+1;
-                double tmp1=LX+(L1-LY-playerheight)*div(LX-posX,LY-posY);
-                double tmp2=LY+playerheight+(L2-LX)*div(LY-posY,LX-posX);
-                double cp1=INF,cp2=INF;
-                if(tmp1>=L2-1&&tmp1<=L2)cp1=div(LY+playerheight-L1,LY-posY);
-                if(tmp2>=L1&&tmp2<=L1+1)cp2=div(LX-L2,LX-posX);
-                if(cp1<cp2)
-                {
-                    posY=L1-playerheight;
-                    if(vY>0)vY=0;
-                }
-                else
-                {
-                    posX=L2;
-                    if(vX<0)vX=0;
-                }
-                return;
-            }
             if(p2)//rightdown
             {
                 double L1=int(posY)+1,L2=int(posX+playerheight);
@@ -202,23 +179,50 @@ namespace __player
                 }
                 return;
             }
+            if(p3)//leftup
+            {
+                double L1=int(posY+playerheight+eps),L2=int(posX)+1;
+                if(checkinblock(LX+vX/tps,LY+playerheight)&&!checkinblock(LX,LY+playerheight+vY/tps))
+                {
+                    vX=0;
+                    posX=L2;
+                    return;
+                }
+                if(checkinblock(LX,LY+playerheight+vY/tps)&&!checkinblock(LX+vX/tps,LY+playerheight))
+                {
+                    vY=0;
+                    posY=L1-playerheight;
+                    return;
+                }
+                if(checkinblock(LX+vX/tps,LY+playerheight)&&checkinblock(LX,LY+playerheight+vY/tps))
+                {
+                    vX=vY=0;
+                    posX=L2,posY=L1-playerheight;
+                    return;
+                }
+                return;
+            }
+
             if(p4)//rightup
             {
-                double L1=int(posY+playerheight),L2=int(posX+playerheight);
-                double tmp1=LX+playerheight+(L1-LY-playerheight)*div(LX-posX,LY-posY);
-                double tmp2=LY+playerheight+(L2-LX-playerheight)*div(LY-posY,LX-posX);
-                double cp1=INF,cp2=INF;
-                if(tmp1>=L2&&tmp1<=L2+1)cp1=div(LY+playerheight-L1,LY-posY);
-                if(tmp2>=L1&&tmp2<=L1+1)cp2=div(LX+playerheight-L2,LX-posX);
-                if(cp1<cp2)
+                double L1=int(posY+playerheight+eps),L2=int(posX+playerheight+eps);
+                if(checkinblock(LX+playerheight+vX/tps,LY+playerheight)&&!checkinblock(LX+playerheight,LY+playerheight+vY/tps))
                 {
-                    posY=L1-playerheight;
-                    if(vY>0)vY=0;
-                }
-                else
-                {
+                    vX=0;
                     posX=L2-playerheight;
-                    if(vX>0)vX=0;
+                    return;
+                }
+                if(checkinblock(LX+playerheight,LY+playerheight+vY/tps)&&!checkinblock(LX+playerheight+vX/tps,LY+playerheight))
+                {
+                    vY=0;
+                    posY=L1-playerheight;
+                    return;
+                }
+                if(checkinblock(LX+playerheight+vX/tps,LY+playerheight)&&checkinblock(LX+playerheight,LY+playerheight+vY/tps))
+                {
+                    vX=vY=0;
+                    posX=L2-playerheight,posY=L1-playerheight;
+                    return;
                 }
                 return;
             }
@@ -244,8 +248,9 @@ namespace __player
             if(jumpCoolDown) jumpCoolDown--;
             if(HurtCd) HurtCd--;
             double LposX = posX,LposY = posY;
-            posX += vX / tps, posY += vY / tps;
             vY -= gravity / tps;
+            if(vY < -verticalSpeedLimit)vY = -verticalSpeedLimit;
+            posX += vX / tps, posY += vY / tps;
             fixStatus(LposX,LposY);
             if(onGround())jumpCount = 0;
         }
