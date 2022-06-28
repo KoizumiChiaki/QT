@@ -53,7 +53,6 @@ namespace __gameMap
         }
         enum block getBlockType(int x, int y)//(x, y)
         {
-
             return sta[y][x];//0:empty, 1:solid, 2:liquid, 3:platform
         }
         QImage getWholeMap()//print the whole map

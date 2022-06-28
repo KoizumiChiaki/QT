@@ -7,6 +7,7 @@
 #include<QPainter>
 #include<QDebug>
 #include<QPaintEvent>
+#include<QDebug>
 
 #include"libs/gametick.h"
 #include"libs/kbinput.h"
@@ -65,10 +66,10 @@ void MainWindow::startGame()
     setTheme(desert);//Just for testing
     gameMap.mapInit();
     repaint();
-    for (int i = 1; i <= 50; i++)
+    for (int i = 1; i <= 80; i++)
     {
         __gameTick::tick();
-        Sleep(16);
+        Sleep(10);
         repaint();
     }
     repaint();
@@ -102,7 +103,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
+    setFixedSize(1280,960);
 }
 
 MainWindow::~MainWindow()
