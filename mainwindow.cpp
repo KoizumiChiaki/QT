@@ -5,6 +5,7 @@
 #include<QPushButton>
 #include<QKeyEvent>
 #include<QPainter>
+#include<QDebug>
 #include<QPaintEvent>
 
 #include"libs/gametick.h"
