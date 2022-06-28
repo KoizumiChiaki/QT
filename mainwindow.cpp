@@ -45,8 +45,6 @@ void MainWindow::paintEvent(QPaintEvent *)
     }
     if (gameStatus == __gameTick::inGame)//
     {
-        setTheme(desert);//Just for testing
-        gameMap.mapInit();
         QPixmap map = QPixmap::fromImage(gameMap.getWholeMap());
         QPixmap p1 = QPixmap::fromImage(__gameTick::P1.GetPlayerState());
         QPixmap p2 = QPixmap::fromImage(__gameTick::P2.GetPlayerState());
@@ -63,6 +61,8 @@ void MainWindow::startGame()
     __gameTick::P1.initialize(1, 16 - 0.5 * playerheight, 18);
     __gameTick::P2.initialize(0, 32 - 0.5 * playerheight, 18);
     __gameTick::gameStatus = inGame;
+    setTheme(desert);//Just for testing
+    gameMap.mapInit();
     for (int i = 1; i <= 20; i++)
     {
         __gameTick::tick();
