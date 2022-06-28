@@ -21,6 +21,7 @@ namespace __gameTick
 	public:
         // Hp
         int Hp,Mp;
+        bool Direction;//0 Left 1 Right
         // location
 		double posX, posY;
 		// velocity (blocks per second) 
