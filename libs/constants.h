@@ -6,16 +6,16 @@ const int timePerTick = 2;
 const int screenWidth = 48, screenHeight = 36;
 const unsigned int tps = 60;
 // gravity (vY diminishing speed per second) 
-const double gravity = 25;
+const double gravity = 200;
 // speed det per second 
-const double normalSpeed = 50;
-const double dashSpeed = 30;
+const double normalSpeed = 200;
+const double dashSpeed = 400;
 // vY increment per jump  
-const double jumpSpeed = 12;
+const double jumpSpeed = 40;
 // speed limits 
-const double normalSpeedLimit = 8;
-const double dashSpeedLimit = 12;
-const double verticalSpeedLimit = 12;
+const double normalSpeedLimit = 20;
+const double dashSpeedLimit = 30;
+const double verticalSpeedLimit = 40;
 // jump cd 
 const double playerheight = 0.8125;
 const unsigned int jumpCoolDownTicks = 10;
