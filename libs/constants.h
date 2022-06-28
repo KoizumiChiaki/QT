@@ -22,5 +22,7 @@ const unsigned int HurtCdTicks = 10;
 const double alphaX = 1.12;
 const int MaxHp = 100;
 const int MaxMp = 100;
+const double TossSpeed = 5;
+const double ShootSpeed = 20;
 
 #endif // _QTHWK_CONSTANTS_H_
