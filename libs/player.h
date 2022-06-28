@@ -115,48 +115,50 @@ namespace __player
         // fix player position when hitting blocks
         void fixStatus(double LX,double LY)
         {
-            if(checkinblock(posX,posY) && checkinblock(posX+playerheight,posY))
+            int p1=checkinblock(posX,posY),
+                    p2=checkinblock(posX+playerheight,posY),
+                    p3=checkinblock(posX,posY+playerheight),
+                    p4=checkinblock(posX+playerheight,posY+playerheight);
+            int cnt=p1+p2+p3+p4;
+            if(!cnt)return;
+            if(p1 && p2)
             {
                 posY = int(posY) + 1;
                 if(vY<0)vY = 0;//Down
-                return;
             }
-            if(checkinblock(posX,posY+playerheight) && checkinblock(posX+playerheight,posY+playerheight))
+            if(p3 && p4)
             {
                 posY = int(posY+playerheight) - playerheight;
                 if(vY>0)vY = 0;//Up
-                return;
             }
-            if(checkinblock(posX,posY) && checkinblock(posX,posY+playerheight))
+            if(p1 && p3)
             {
                 posX = int(posX) + 1;
                 if(vX<0)vX = 0;//Left
-                return;
             }
-            if(checkinblock(posX+playerheight,posY) && checkinblock(posX+playerheight,posY+playerheight))
+            if(p2 && p4)
             {
                 posX = int(posX+playerheight) - playerheight;
                 if(vX>0)vX = 0;//Right
-                return;
             }
-            if(checkinblock(posX,posY))//leftdown
+            if(cnt>=2)return;
+            if(p1)//leftdown
             {
                 double L=int(posY)+1;
                 double tmp=LX+(L-LY)*div(LX-posX,LY-posY);
-                if(tmp>=int(posX)&&tmp<=int(posX)+1)
-                {
-                    posY=L;
-                    if(vY<0)vY=0;
-                    return;
-                }
-                else
+                if(tmp<int(posX)||tmp>int(posX)+1)
                 {
                     posX=int(posX)+1;
                     if(vX<0)vX=0;
-                    return;
                 }
+                else
+                {
+                    posY=L;
+                    if(vY<0)vY=0;
+                }
+                return;
             }
-            if(checkinblock(posX,posY+playerheight))//leftup
+            if(p3)//leftup
             {
                 double L=int(posY+playerheight);
                 double tmp=LX+(L-LY-playerheight)*div(LX-posX,LY-posY);
@@ -164,33 +166,31 @@ namespace __player
                 {
                     posY=L-playerheight;
                     if(vY>0)vY=0;
-                    return;
                 }
                 else
                 {
                     posX=int(posX)+1;
                     if(vX<0)vX=0;
-                    return;
                 }
+                return;
             }
-            if(checkinblock(posX+playerheight,posY))//rightdown
+            if(p2)//rightdown
             {
                 double L=int(posY)+1;
                 double tmp=LX+playerheight+(L-LY)*div(LX-posX,LY-posY);
-                if(tmp>=int(posX+playerheight)&&tmp<=int(posX+playerheight)+1)
-                {
-                    posY=L;
-                    if(vY<0)vY=0;
-                    return;
-                }
-                else
+                if(tmp<int(posX+playerheight)||tmp>int(posX+playerheight)+1)
                 {
                     posX=int(posX+playerheight)-playerheight;
                     if(vX>0)vX=0;
-                    return;
                 }
+                else
+                {
+                    posY=L;
+                    if(vY<0)vY=0;
+                }
+                return;
             }
-            if(checkinblock(posX+playerheight,posY+playerheight))//rightup
+            if(p4)//rightup
             {
                 double L=int(posY+playerheight);
                 double tmp=LX+playerheight+(L-LY)*div(LX-posX,LY-posY);
@@ -198,14 +198,13 @@ namespace __player
                 {
                     posY=L-playerheight;
                     if(vY>0)vY=0;
-                    return;
                 }
                 else
                 {
                     posX=int(posX+playerheight)-playerheight;
                     if(vX>0)vX=0;
-                    return;
                 }
+                return;
             }
         }
         void updatedirection()
