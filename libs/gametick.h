@@ -221,7 +221,7 @@ namespace __gameTick
             if(HurtCd) HurtCd--;
             double LposX = posX,LposY = posY;
             posX += vX / tps, posY += vY / tps;
-            vY += gravity / tps;
+            vY -= gravity / tps;
             fixStatus(LposX,LposY);
 			if(onGround())jumpCount = 0;
 		}
