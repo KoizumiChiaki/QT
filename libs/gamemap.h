@@ -15,27 +15,29 @@ using namespace std;
 namespace __gameMap
 {
     const int Width = 48, Height = 36;
-    const string dir1 = "..\\resources\\images\\base\\";
-    const string dir2 = "..\\resources\\images\\environment\\";
+    const string dir1 = "..\\QT\\resources\\images\\base\\";
+    const string dir2 = "..\\QT\\resources\\images\\environment\\";
     const string themeName[6] = { "desert", "end", "mountains", "nether", "ocean", "plain" };
+    enum theme { desert, the_end, mountains, nether, ocean, plain } nowTheme;
+    enum block { empty, solid, liquid, platform };
     // 48 * 36 screen
+    void setTheme(theme x){nowTheme = x;}
     class gameMapStructure
     {
     private:
         string source;
         int map[Height][Width];
-        enum theme { desert, end, mountains, nether, ocean, plain } themeType;
-        enum block { empty, solid, liquid, platform }sta[Height][Width];
-
+        theme themeType;
+        block sta[Height][Width];
         const enum block typ[25] = {
         empty, solid, empty, solid, solid, empty, liquid, liquid, solid, solid,
         liquid, solid, solid, solid, solid, solid, solid, solid, empty, liquid,
         solid };
     public:
-        void mapInit(theme Type)//load the map
+        void mapInit()//load the map
         {
-            themeType = Type;
-            source = dir1 + themeName[Type] + ".txt";
+            themeType = nowTheme;
+            source = dir1 + themeName[(unsigned int)nowTheme] + ".txt";
             FILE* Input = fopen(source.c_str(), "r");
             for (int i = Height - 1; i >= 0; i--)
             {
@@ -69,6 +71,18 @@ namespace __gameMap
         }
     }gameMap;
 }
+using __gameMap::setTheme;
 using __gameMap::gameMap;
+using __gameMap::desert;
+using __gameMap::the_end;
+using __gameMap::mountains;
+using __gameMap::nether;
+using __gameMap::ocean;
+using __gameMap::plain;
+using __gameMap::empty;
+using __gameMap::solid;
+using __gameMap::liquid;
+using __gameMap::platform;
+
 
 #endif // _QTHWK_GAMEMAP_H_

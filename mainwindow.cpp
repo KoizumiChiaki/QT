@@ -3,9 +3,12 @@
 
 #include<QPushButton>
 #include<QKeyEvent>
+#include<QPainter>
+#include<QPaintEvent>
 
 #include"libs/gametick.h"
 #include"libs/kbinput.h"
+#include"libs/gamemap.h"
 
 void MainWindow::keyPressEvent(QKeyEvent *ev)
 {
@@ -28,6 +31,15 @@ void MainWindow::keyPressEvent(QKeyEvent *ev)
 void MainWindow::keyReleaseEvent(QKeyEvent *ev)
 {
     keyboardStatus.update(ev, false);
+}
+void MainWindow::paintEvent(QPaintEvent *)
+{
+
+    QPainter painter(this);
+    setTheme(desert);//Just for testing
+    gameMap.mapInit();
+    QPixmap p = QPixmap::fromImage(gameMap.getWholeMap());
+    painter.drawPixmap(0, 0, MainWindow::width(), MainWindow::height(), p);
 }
 
 MainWindow::MainWindow(QWidget *parent)

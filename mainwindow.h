@@ -18,6 +18,7 @@ public:
 
     void keyPressEvent(QKeyEvent *ev);
     void keyReleaseEvent(QKeyEvent *ev);
+    void paintEvent(QPaintEvent *);
 
 private:
     Ui::MainWindow *ui;
