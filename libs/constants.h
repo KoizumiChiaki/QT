@@ -6,7 +6,7 @@ const int timePerTick = 5;
 const int screenWidth = 48, screenHeight = 36;
 const unsigned int tps = 20;
 // gravity (vY diminishing speed per second) 
-const double gravity = 15;
+const double gravity = 25;
 // speed det per second 
 const double normalSpeed = 15;
 const double dashSpeed = 30;
