@@ -233,15 +233,17 @@ namespace __gameTick
                 else dir+="fall";
             }
             else dir+="stay";
-            QPixmap tmp;
+            QImage tmp;
             tmp.load((dir+".png").c_str());
+            if (Direction == 0)
+                tmp = tmp.mirrored(true, false);
             QPainter painter(&ret);
-            painter.drawPixmap((int)round(posX * 16), (int)round((screenHeight - posY) * 16) - 16 * playerheight, 16 * playerheight, 16 * playerheight, tmp);
+            painter.drawPixmap((int)round(posX * 16), (int)round((screenHeight - posY) * 16) - 16 * playerheight, 16 * playerheight, 16 * playerheight, QPixmap::fromImage(tmp));
             return ret;
         }
 
 	}P1, P2;
-    enum gameStatusEnum{menu,inGame,endGame}gameStatus;
+    enum gameStatusEnum{menu,inGame,endGame}gameStatus = menu;
     void tick()
 	{
 		// player speed update 

@@ -9,6 +9,7 @@
 #include"libs/gametick.h"
 #include"libs/kbinput.h"
 #include"libs/gamemap.h"
+#include"libs/constants.h"
 
 void MainWindow::keyPressEvent(QKeyEvent *ev)
 {
@@ -53,8 +54,9 @@ void MainWindow::paintEvent(QPaintEvent *)
 void MainWindow::startGame()
 {
     keyboardStatus.clear();
-    __gameTick::P1.initialize();
-    __gameTick::P2.initialize();
+    __gameTick::P1.initialize(1, 16 - 0.5 * playerheight, 18);
+    __gameTick::P2.initialize(0, 32 - 0.5 * playerheight, 18);
+    update();
     __gameTick::gameStatus = inGame;
     int lastTickTime = clock();
     while(true)
@@ -64,7 +66,7 @@ void MainWindow::startGame()
         if(__Time >= lastTickTime + int(CLOCKS_PER_SEC / tps))
         {
             lastTickTime = __Time;
-            __gameTick::tick();
+            //__gameTick::tick();
             update();
         }
     }
