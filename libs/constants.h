@@ -8,14 +8,14 @@ const unsigned int tps = 20;
 // gravity (vY diminishing speed per second) 
 const double gravity = 25;
 // speed det per second 
-const double normalSpeed = 15;
+const double normalSpeed = 100;
 const double dashSpeed = 30;
 // vY increment per jump  
 const double jumpSpeed = 12;
 // speed limits 
 const double normalSpeedLimit = 8;
 const double dashSpeedLimit = 12;
-const double verticalSpeedLimit = 12;
+const double verticalSpeedLimit = 15;
 // jump cd 
 const double playerheight = 0.8125;
 const unsigned int jumpCoolDownTicks = 10;
