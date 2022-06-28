@@ -2,7 +2,6 @@
 #define _QTHWK_GAMETICK_H_
 
 #include <ctime>
-
 #include <QImage>
 #include <QPixmap>
 #include <QPainter>
