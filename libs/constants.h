@@ -9,12 +9,12 @@ const unsigned int tps = 60;
 const double gravity = 200;
 // speed det per second 
 const double normalSpeed = 200;
-const double dashSpeed = 400;
+const double dashSpeed = 600;
 // vY increment per jump  
 const double jumpSpeed = 40;
 // speed limits 
 const double normalSpeedLimit = 20;
-const double dashSpeedLimit = 30;
+const double dashSpeedLimit = 40;
 const double verticalSpeedLimit = 40;
 // jump cd 
 const double playerheight = 0.8125;
