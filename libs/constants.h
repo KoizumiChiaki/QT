@@ -27,4 +27,15 @@ const int MaxMp = 100;
 const double TossSpeed = 5;
 const double ShootSpeed = 20;
 
+const int barWidth = 200;
+const int barHeight = 10;
+const int barRoundX = 40;
+const int barRoundY = 40;
+const int barAlpha = 120;
+const int barSideWidth = 50;
+const int barSideHeight = 20;
+const int barDistance = 16;
+//HP & MP bar
+const int headSize = 40;
+
 #endif // _QTHWK_CONSTANTS_H_

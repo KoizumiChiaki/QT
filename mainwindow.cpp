@@ -59,19 +59,36 @@ void MainWindow::paintEvent(QPaintEvent *)
         temp.drawPixmap(0, 0, p2);// paint player2
 
         QPen pen;
-        pen.setColor(QColor(0, 0, 0, 255));
+        pen.setColor(QColor(0, 0, 0, barAlpha));
         QBrush brush;
-        brush.setColor(QColor(125, 45, 45, 255));
+        brush.setColor(QColor(125, 45, 45, barAlpha));// Back Color
         brush.setStyle(Qt::SolidPattern);
         temp.setPen(pen), temp.setBrush(brush);
-        temp.drawRect(20, 20, 200, 8);
-        temp.drawRect(screenWidth * 16 - 221, 20, 200, 8);
+
+        temp.drawRoundRect(barSideWidth, barSideHeight, barWidth, barHeight, barRoundX, barRoundY);
+        temp.drawRoundRect(screenWidth * 16 - 1 - barSideWidth - barWidth, barSideHeight, barWidth, barHeight, barRoundX, barRoundY);
         //paint HP(empty ver)
-        brush.setColor(QColor(255, 0, 0, 255));
+        temp.drawRoundRect(barSideWidth, barSideHeight + barDistance, barWidth, barHeight, barRoundX, barRoundY);
+        temp.drawRoundRect(screenWidth * 16 - 1 - barSideWidth - barWidth, barSideHeight + barDistance, barWidth, barHeight, barRoundX, barRoundY);
+        //paint MP(empty ver)
+        brush.setColor(QColor(255, 0, 0, barAlpha));// Red
         temp.setBrush(brush);
-        temp.drawRect(20, 20, 2 * r1, 8);
-        temp.drawRect(screenWidth * 16 - 21 - 2 * r2, 20, 2 * r2, 8);
+        temp.drawRoundRect(barSideWidth, barSideHeight, barWidth * r1 / 100, barHeight, barRoundX, barRoundY);
+        temp.drawRoundRect(screenWidth * 16 - 1 - barSideWidth - barWidth * r2 / 100, barSideHeight, barWidth * r2 / 100, barHeight, barRoundX, barRoundY);
         //paint HP(full ver)
+        brush.setColor(QColor(0, 0, 255, barAlpha));// Blue
+        temp.setBrush(brush);
+        temp.drawRoundRect(barSideWidth, barSideHeight + barDistance, barWidth * r1 / 100, barHeight, barRoundX, barRoundY);
+        temp.drawRoundRect(screenWidth * 16 - 1 - barSideWidth - barWidth * r2 / 100, barSideHeight + barDistance, barWidth * r2 / 100, barHeight, barRoundX, barRoundY);
+        //paint MP(full ver)
+
+        QImage h1("..\\QT\\resources\\images\\player\\stay.png");
+        temp.drawPixmap(barSideWidth - headSize - 5, barSideHeight + barHeight - (headSize - barDistance) / 2 - 5, headSize, headSize, QPixmap::fromImage(h1));
+        QImage h2("..\\QT\\resources\\images\\player\\stay.png");
+        h2 = h2.mirrored(true, false);
+        temp.drawPixmap(screenWidth * 16 - (barSideWidth - headSize - 5) - headSize, barSideHeight + barHeight - (headSize - barDistance) / 2 - 5, headSize, headSize, QPixmap::fromImage(h2));
+        //paint head picture
+
         painter.drawPixmap(0, 0, MainWindow::width(), MainWindow::height(), QPixmap::fromImage(result));
         //print
     }
@@ -81,10 +98,10 @@ void MainWindow::paintEvent(QPaintEvent *)
 void MainWindow::startGame()
 {
     keyboardStatus.clear();
-    __player::P1.initialize(1, screenWidth / 3 * 1 - 0.5 * playerheight, screenHeight - 1);
-    __player::P2.initialize(0, screenWidth / 3 * 2 - 0.5 * playerheight, screenHeight - 1);
+    __player::P1.initialize(1, screenWidth / 3 * 1 - 0.5 * playerheight, screenHeight - 3);
+    __player::P2.initialize(0, screenWidth / 3 * 2 - 0.5 * playerheight, screenHeight - 3);
     __gameTick::gameStatus = inGame;
-    setTheme(desert);//Just for testing
+    setTheme(nether);//Just for testing
     gameMap.mapInit();
     repaint();
 }
