@@ -199,6 +199,11 @@ namespace __gameTick
                 }
             }
 		}
+        void updatedirection()
+        {
+            if(Direction==1&&vX<0)Direction=0;
+            if(Direction==0&&vX>0)Direction=1;
+        }
         // check if the player is on ground
         bool onGround()
 		{
@@ -266,6 +271,8 @@ namespace __gameTick
             P2.addMove(player::DOWN);
 		
 		// player moving 
+        P1.updatedirection();
+        P2.updatedirection();
 		P1.move();
 		P2.move();
 		
