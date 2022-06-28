@@ -58,18 +58,19 @@ void MainWindow::startGame()
     __gameTick::P2.initialize(0, 32 - 0.5 * playerheight, 18);
     update();
     __gameTick::gameStatus = inGame;
-    int lastTickTime = clock();
+    /*int lastTickTime = clock();
     while(true)
     {
+        update();
         if(gameStatus != inGame) break;
         int __Time = int(clock());
         if(__Time >= lastTickTime + int(CLOCKS_PER_SEC / tps))
         {
             lastTickTime = __Time;
-            //__gameTick::tick();
+            __gameTick::tick();
             update();
         }
-    }
+    }*/
 }
 void MainWindow::backToMenu()
 {
