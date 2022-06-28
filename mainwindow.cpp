@@ -63,11 +63,14 @@ void MainWindow::startGame()
     __gameTick::gameStatus = inGame;
     setTheme(desert);//Just for testing
     gameMap.mapInit();
-    for (int i = 1; i <= 20; i++)
+    repaint();
+    for (int i = 1; i <= 50; i++)
     {
         __gameTick::tick();
+        Sleep(16);
+        repaint();
     }
-    update();
+    repaint();
     /*int lastTickTime = clock();
     while(true)
     {
