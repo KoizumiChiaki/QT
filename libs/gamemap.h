@@ -1,6 +1,7 @@
 #ifndef _QTHWK_GAMEMAP_H_
 #define _QTHWK_GAMEMAP_H_
 
+#include "constants.h"
 #include <QImage>
 #include <QPixmap>
 #include <QPainter>
@@ -14,7 +15,6 @@ using namespace std;
 
 namespace __gameMap
 {
-    const int Width = 48, Height = 36;
     const string dir1 = "..\\QT\\resources\\images\\base\\";
     const string dir2 = "..\\QT\\resources\\images\\environment\\";
     const string themeName[6] = { "desert", "end", "mountains", "nether", "ocean", "plain" };
@@ -26,9 +26,9 @@ namespace __gameMap
     {
     private:
         string source;
-        int map[Height][Width];
+        int map[screenHeight][screenWidth];
         theme themeType;
-        block sta[Height][Width];
+        block sta[screenHeight][screenWidth];
         const enum block typ[25] = {
         empty, solid, empty, solid, solid, empty, liquid, liquid, solid, solid,
         liquid, solid, solid, solid, solid, solid, solid, solid, empty, liquid,
@@ -39,10 +39,10 @@ namespace __gameMap
             themeType = nowTheme;
             source = dir1 + themeName[(unsigned int)nowTheme] + ".txt";
             FILE* Input = fopen(source.c_str(), "r");
-            for (int i = Height - 1; i >= 0; i--)
+            for (int i = screenHeight - 1; i >= 0; i--)
             {
                 int tmp;
-                for (int j = 0; j < Width; j++)
+                for (int j = 0; j < screenWidth; j++)
                 {
                     fscanf(Input, "%d", &tmp);
                     map[i][j] = tmp;
@@ -56,15 +56,15 @@ namespace __gameMap
         }
         QImage getWholeMap()//print the whole map
         {
-            QImage ret(Width * 16, Height * 16, QImage::Format_RGBA8888);
+            QImage ret(screenWidth * 16, screenHeight * 16, QImage::Format_RGBA8888);
             QPixmap tmp;
             QPainter painter(&ret);
-            for (int i = 0; i < Height; i++)
+            for (int i = 0; i < screenHeight; i++)
             {
-                for (int j = 0; j < Width; j++)
+                for (int j = 0; j < screenWidth; j++)
                 {
                     tmp.load((dir2 + to_string(map[i][j]) + ".png").c_str());
-                    painter.drawPixmap(j * 16, (Height - 1 - i) * 16, 16, 16, tmp);
+                    painter.drawPixmap(j * 16, (screenHeight - 1 - i) * 16, 16, 16, tmp);
                 }
             }
             return ret;

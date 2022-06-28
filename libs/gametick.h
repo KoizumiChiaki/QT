@@ -3,11 +3,15 @@
 
 #include <ctime>
 
+#include <QImage>
+#include <QPixmap>
+#include <QPainter>
 #include <QMainWindow>
 #include "constants.h"
 #include "gamemap.h"
 #include "gamemath.h"
 #include "kbinput.h"
+using namespace std;
 
 
 namespace __gameTick
@@ -15,7 +19,9 @@ namespace __gameTick
     class player
 	{
 	public:
-		// location 
+        // Hp
+        int Hp,Mp;
+        // location
 		double posX, posY;
 		// velocity (blocks per second) 
 		double vX, vY; 
@@ -26,6 +32,7 @@ namespace __gameTick
 		// is in Dash 
 		bool inDash; 
         // initialize player
+        int HurtCd;
         // TODO:
         // Hp, Mp
         // Special CD (if have)
@@ -34,16 +41,19 @@ namespace __gameTick
 		{
 			vX = 0, vY = 0;
 			jumpCount = 0, jumpCoolDown = 0;
-			inDash = false;
+            Hp = MaxHp , Mp = MaxMp;
+            inDash = false;
             // TODO:
             // X=? y=?
 		}
 		
+
 		enum direction
 		{LEFT, RIGHT, UP, DOWN};
         // add speed to the player
 		void addMove(const direction movDir)
 		{
+            if(HurtCd||Hp<=0)return;
 			if(movDir == LEFT)
 			{
 				if(!inDash)
@@ -89,7 +99,7 @@ namespace __gameTick
         // check if a real position is in block
         bool checkinblock(double X,double Y)
         {
-            return (unsigned int)gameMap.getBlockType(int(X),int(Y)) == 1;
+            return gameMap.getBlockType(int(X),int(Y)) == solid;
         }
         // fix player position when hitting blocks
         void fixStatus(double LX,double LY)
@@ -201,13 +211,33 @@ namespace __gameTick
 		void move()
 		{
 			if(jumpCoolDown) jumpCoolDown--;
-
+            if(HurtCd) HurtCd--;
             double LposX = posX,LposY = posY;
 			posX += vX / tps, posY += vY / tps;
 			
             fixStatus(LposX,LposY);
 			if(onGround())jumpCount = 0;
 		}
+        QImage GetPlayerState()
+        {
+            QImage ret(screenWidth * 16, screenHeight * 16, QImage::Format_RGBA8888);
+            string dir = "..\\QT\\resources\\images\\player\\";
+            if(Hp<=MaxHp/2)dir+="injured_";
+            if(Hp<=0)dir+="dead";
+            else if(HurtCd)dir+="hurt";
+            else if(!onGround())
+            {
+                if(vY>=0)dir+="jump";
+                else dir+="fall";
+            }
+            else dir+="stay";
+            QPixmap tmp;
+            tmp.load((dir+".png").c_str());
+            QPainter painter(&ret);
+            painter.drawPixmap((int)round(posX * 16), (int)round((screenHeight - posY) * 16) - 16 * playerheight, 16 * playerheight, 16 * playerheight, tmp);
+            return ret;
+        }
+
 	}P1, P2;
     enum gameStatusEnum{menu,inGame,endGame}gameStatus;
     void tick()
@@ -243,38 +273,12 @@ namespace __gameTick
 		// rendering new graphics 
         // (maybe not implemented here?)
 		// TODO 
-	}
-    void startGame()
-    {
-        keyboardStatus.clear();
-        P1.initialize();
-        P2.initialize();
-        gameStatus = inGame;
-        int lastTickTime = clock();
-        while(true)
-        {
-            if(gameStatus != inGame) break;
-            int __Time = int(clock());
-            if(__Time >= lastTickTime + int(CLOCKS_PER_SEC / tps))
-            {
-                lastTickTime = __Time;
-                tick();
-            }
-        }
-    }
-    void backToMenu()
-    {
-        // TODO
-    }
-    void pauseGame()
-    {
-        // TODO
     }
 }
 using __gameTick::gameStatusEnum;
 using __gameTick::gameStatus;
-using __gameTick::startGame;
-using __gameTick::backToMenu;
-using __gameTick::pauseGame;
+using __gameTick::inGame;
+using __gameTick::menu;
+using __gameTick::endGame;
 
 #endif // _QTHWK_GAMETICK_H_

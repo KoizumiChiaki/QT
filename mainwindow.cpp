@@ -36,11 +36,49 @@ void MainWindow::paintEvent(QPaintEvent *)
 {
 
     QPainter painter(this);
-    setTheme(desert);//Just for testing
-    gameMap.mapInit();
-    QPixmap p = QPixmap::fromImage(gameMap.getWholeMap());
-    painter.drawPixmap(0, 0, MainWindow::width(), MainWindow::height(), p);
+    if (true)//
+    {
+        setTheme(desert);//Just for testing
+        gameMap.mapInit();
+        QPixmap map = QPixmap::fromImage(gameMap.getWholeMap());
+        QPixmap p1 = QPixmap::fromImage(__gameTick::P1.GetPlayerState());
+        QPixmap p2 = QPixmap::fromImage(__gameTick::P2.GetPlayerState());
+        painter.drawPixmap(0, 0, MainWindow::width(), MainWindow::height(), map);
+        painter.drawPixmap(0, 0, MainWindow::width(), MainWindow::height(), p1);
+        painter.drawPixmap(0, 0, MainWindow::width(), MainWindow::height(), p2);
+    }
 }
+
+
+void MainWindow::startGame()
+{
+    keyboardStatus.clear();
+    __gameTick::P1.initialize();
+    __gameTick::P2.initialize();
+    __gameTick::gameStatus = inGame;
+    int lastTickTime = clock();
+    while(true)
+    {
+        if(gameStatus != inGame) break;
+        int __Time = int(clock());
+        if(__Time >= lastTickTime + int(CLOCKS_PER_SEC / tps))
+        {
+            lastTickTime = __Time;
+            __gameTick::tick();
+            update();
+        }
+    }
+}
+void MainWindow::backToMenu()
+{
+    // TODO
+}
+void MainWindow::pauseGame()
+{
+    // TODO
+}
+
+
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
