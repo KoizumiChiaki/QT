@@ -41,8 +41,8 @@ void MainWindow::paintEvent(QPaintEvent *)
         setTheme(desert);//Just for testing
         gameMap.mapInit();
         QPixmap map = QPixmap::fromImage(gameMap.getWholeMap());
-        QPixmap p1 = QPixmap::fromImage(__gameTick::P1.GetPlayerState());
-        QPixmap p2 = QPixmap::fromImage(__gameTick::P2.GetPlayerState());
+        QPixmap p1 = QPixmap::fromImage(P1.GetPlayerState());
+        QPixmap p2 = QPixmap::fromImage(P2.GetPlayerState());
         painter.drawPixmap(0, 0, MainWindow::width(), MainWindow::height(), map);
         painter.drawPixmap(0, 0, MainWindow::width(), MainWindow::height(), p1);
         painter.drawPixmap(0, 0, MainWindow::width(), MainWindow::height(), p2);
@@ -53,8 +53,8 @@ void MainWindow::paintEvent(QPaintEvent *)
 void MainWindow::startGame()
 {
     keyboardStatus.clear();
-    __gameTick::P1.initialize();
-    __gameTick::P2.initialize();
+    P1.initialize();
+    P2.initialize();
     __gameTick::gameStatus = inGame;
     int lastTickTime = clock();
     while(true)

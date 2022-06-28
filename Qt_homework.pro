@@ -18,6 +18,7 @@ HEADERS += \
     libs/gamemath.h \
     libs/gametick.h \
     libs/kbinput.h \
+    libs/player.h \
     mainwindow.h \
 
 FORMS += \
