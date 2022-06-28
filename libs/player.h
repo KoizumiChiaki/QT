@@ -238,6 +238,7 @@ namespace __player
             if(HurtCd)return;
             L.push_back((bullet){posX+playerheight/2,posY+playerheight/2,TossSpeed,0,gravity,tmp});
         }
+        int GetPlayerHPRate(){return Hp * 100 / MaxHp;}
         QImage GetPlayerState()
         {
             QImage ret(screenWidth * 16, screenHeight * 16, QImage::Format_RGBA8888);
