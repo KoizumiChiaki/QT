@@ -144,64 +144,80 @@ namespace __player
             if(cnt>=2)return;
             if(p1)//leftdown
             {
-                double L=int(posY)+1;
-                double tmp=LX+(L-LY)*div(LX-posX,LY-posY);
-                if(tmp<int(posX)||tmp>int(posX)+1)
+                double L1=int(posY)+1,L2=int(posX)+1;
+                double tmp1=LX+(L1-LY)*div(LX-posX,LY-posY);
+                double tmp2=LY+(L2-LX)*div(LY-posY,LX-posX);
+                double cp1=INF,cp2=INF;
+                if(tmp1>=L2-1&&tmp1<=L2)cp1=div(LY-L1,LY-posY);
+                if(tmp2>=L1-1&&tmp2<=L1)cp2=div(LX-L2,LX-posX);
+                if(cp1<cp2)
                 {
-                    posX=int(posX)+1;
-                    if(vX<0)vX=0;
+                    posY=L1;
+                    if(vY<0)vY=0;
                 }
                 else
                 {
-                    posY=L;
-                    if(vY<0)vY=0;
+                    posX=L2;
+                    if(vX<0)vX=0;
                 }
                 return;
             }
             if(p3)//leftup
             {
-                double L=int(posY+playerheight);
-                double tmp=LX+(L-LY-playerheight)*div(LX-posX,LY-posY);
-                if(tmp>=int(posX)&&tmp<=int(posX)+1)
+                double L1=int(posY+playerheight),L2=int(posX)+1;
+                double tmp1=LX+(L1-LY-playerheight)*div(LX-posX,LY-posY);
+                double tmp2=LY+playerheight+(L2-LX)*div(LY-posY,LX-posX);
+                double cp1=INF,cp2=INF;
+                if(tmp1>=L2-1&&tmp1<=L2)cp1=div(LY+playerheight-L1,LY-posY);
+                if(tmp2>=L1&&tmp2<=L1+1)cp2=div(LX-L2,LX-posX);
+                if(cp1<cp2)
                 {
-                    posY=L-playerheight;
+                    posY=L1-playerheight;
                     if(vY>0)vY=0;
                 }
                 else
                 {
-                    posX=int(posX)+1;
+                    posX=L2;
                     if(vX<0)vX=0;
                 }
                 return;
             }
             if(p2)//rightdown
             {
-                double L=int(posY)+1;
-                double tmp=LX+playerheight+(L-LY)*div(LX-posX,LY-posY);
-                if(tmp<int(posX+playerheight)||tmp>int(posX+playerheight)+1)
+                double L1=int(posY)+1,L2=int(posX+playerheight);
+                double tmp1=LX+playerheight+(L1-LY)*div(LX-posX,LY-posY);
+                double tmp2=LY+(L2-LX-playerheight)*div(LY-posY,LX-posX);
+                double cp1=INF,cp2=INF;
+                if(tmp1>=L2&&tmp1<=L2+1)cp1=div(LY-L1,LY-posY);
+                if(tmp2>=L1-1&&tmp2<=L1)cp2=div(LX+playerheight-L2,LX-posX);
+                if(cp1<cp2)
                 {
-                    posX=int(posX+playerheight)-playerheight;
-                    if(vX>0)vX=0;
+                    posY=L1;
+                    if(vY<0)vY=0;
                 }
                 else
                 {
-                    posY=L;
-                    if(vY<0)vY=0;
+                    posX=L2-playerheight;
+                    if(vX>0)vX=0;
                 }
                 return;
             }
             if(p4)//rightup
             {
-                double L=int(posY+playerheight);
-                double tmp=LX+playerheight+(L-LY)*div(LX-posX,LY-posY);
-                if(tmp>=int(posX+playerheight)&&tmp<=int(posX+playerheight)+1)
+                double L1=int(posY+playerheight),L2=int(posX+playerheight);
+                double tmp1=LX+playerheight+(L1-LY-playerheight)*div(LX-posX,LY-posY);
+                double tmp2=LY+playerheight+(L2-LX-playerheight)*div(LY-posY,LX-posX);
+                double cp1=INF,cp2=INF;
+                if(tmp1>=L2&&tmp1<=L2+1)cp1=div(LY+playerheight-L1,LY-posY);
+                if(tmp2>=L1&&tmp2<=L1+1)cp2=div(LX+playerheight-L2,LX-posX);
+                if(cp1<cp2)
                 {
-                    posY=L-playerheight;
+                    posY=L1-playerheight;
                     if(vY>0)vY=0;
                 }
                 else
                 {
-                    posX=int(posX+playerheight)-playerheight;
+                    posX=L2-playerheight;
                     if(vX>0)vX=0;
                 }
                 return;
