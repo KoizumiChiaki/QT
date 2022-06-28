@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QKeyEvent>
+#include <QTimer>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -22,6 +23,9 @@ public:
     void startGame();
     void backToMenu();
     void pauseGame();
+    QTimer * gameClock;
+public slots:
+    void GlobalTick();
 private:
     Ui::MainWindow *ui;
 };

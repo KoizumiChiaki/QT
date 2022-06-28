@@ -5,9 +5,9 @@
 #include<QPushButton>
 #include<QKeyEvent>
 #include<QPainter>
-#include<QDebug>
 #include<QPaintEvent>
 #include<QDebug>
+#include<QTimer>
 
 #include"libs/gametick.h"
 #include"libs/kbinput.h"
@@ -66,26 +66,15 @@ void MainWindow::startGame()
     setTheme(desert);//Just for testing
     gameMap.mapInit();
     repaint();
-    for (int i = 1; i <= 80; i++)
+}
+void MainWindow::GlobalTick()
+{
+    if (__gameTick::gameStatus == inGame)
     {
         __gameTick::tick();
-        Sleep(10);
         repaint();
     }
-    repaint();
-    /*int lastTickTime = clock();
-    while(true)
-    {
-        update();
-        if(gameStatus != inGame) break;
-        int __Time = int(clock());
-        if(__Time >= lastTickTime + int(CLOCKS_PER_SEC / tps))
-        {
-            lastTickTime = __Time;
-            __gameTick::tick();
-            update();
-        }
-    }*/
+    gameClock->start(10);
 }
 void MainWindow::backToMenu()
 {
@@ -100,10 +89,13 @@ void MainWindow::pauseGame()
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
+    , gameClock(new QTimer(this))
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
     setFixedSize(1280,960);
+    gameClock->start(10);
+    connect(gameClock, SIGNAL(timeout()), this, SLOT(GlobalTick()));
 }
 
 MainWindow::~MainWindow()
