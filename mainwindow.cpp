@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include <windows.h>
 
 #include<QPushButton>
 #include<QKeyEvent>
@@ -63,6 +64,11 @@ void MainWindow::startGame()
     __gameTick::P2.initialize(0, 32 - 0.5 * playerheight, 18);
     update();
     __gameTick::gameStatus = inGame;
+    for (int i = 1; i <= 100; i++)
+    {
+        __gameTick::tick();
+        update();
+    }
     /*int lastTickTime = clock();
     while(true)
     {
