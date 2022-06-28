@@ -8,6 +8,8 @@
 #include<QPaintEvent>
 #include<QDebug>
 #include<QTimer>
+#include<list>
+using std::list;
 
 #include"libs/gametick.h"
 #include"libs/kbinput.h"
@@ -75,6 +77,19 @@ QImage PlayerState(int r1, int r2)
     //paint head picture
     return ret;
 }
+QImage AllBullet()
+{
+    QImage ret(screenWidth * 16, screenHeight * 16, QImage::Format_RGBA8888);
+    QPainter temp(&ret);
+    QPixmap img("..\\QT\\resources\\images\\effects\\bullet.png");
+    list<__player::bullet>::iterator it = __player::L.begin();
+    while (it != __player::L.end())
+    {
+        temp.drawPixmap((int)round((it -> posX) * 16 - 3), (int)round(screenHeight * 16 - 1 - (it -> posY) * 16 + 3), 6, 6, img);
+        it++;
+    }
+    return ret;
+}
 
 void MainWindow::paintEvent(QPaintEvent *)
 {
@@ -91,6 +106,7 @@ void MainWindow::paintEvent(QPaintEvent *)
         QPixmap ml = QPixmap::fromImage(MapLiquid()); //liquid map
         QPixmap p1 = QPixmap::fromImage(__player::P1.GetPlayerState()); //player 1
         QPixmap p2 = QPixmap::fromImage(__player::P2.GetPlayerState()); //player 2
+        QPixmap bl = QPixmap::fromImage(AllBullet());
         int r1 = __player::P1.GetPlayerHPRate(), r2 = __player::P2.GetPlayerHPRate();
         QPixmap st = QPixmap::fromImage(PlayerState(r1, r2));//state
         QImage result(screenWidth * 16, screenHeight * 16, QImage::Format_RGBA8888);
@@ -99,6 +115,7 @@ void MainWindow::paintEvent(QPaintEvent *)
         temp.drawPixmap(0, 0, p1);// paint player1
         temp.drawPixmap(0, 0, p2);// paint player2
         temp.drawPixmap(0, 0, ml);// paint the map liquid
+        temp.drawPixmap(0, 0, bl);// paint the map liquid
         temp.drawPixmap(0, 0, st);// paint the map liquid
         painter.drawPixmap(0, 0, MainWindow::width(), MainWindow::height(), QPixmap::fromImage(result));
         //print
@@ -109,10 +126,10 @@ void MainWindow::paintEvent(QPaintEvent *)
 void MainWindow::startGame()
 {
     keyboardStatus.clear();
-    __player::P1.initialize(1, screenWidth / 3 * 1 - 0.5 * playerheight, screenHeight - 3);
-    __player::P2.initialize(0, screenWidth / 3 * 2 - 0.5 * playerheight, screenHeight - 3);
+    __player::P1.initialize(1, screenWidth / 3 * 1 - 0.5 * playerheight, screenHeight - 2);
+    __player::P2.initialize(0, screenWidth / 3 * 2 - 0.5 * playerheight, screenHeight - 2);
     __gameTick::gameStatus = inGame;
-    setTheme(ocean);//Just for testing
+    setTheme(mountains);//Just for testing
     gameMap.mapInit();
     repaint();
 }
