@@ -4,9 +4,14 @@
 #include "gamemap.h"
 #include "gamemath.h"
 #include <QDebug>
+using namespace std;
 
 namespace __player
 {
+    double max(double x,double y)
+    {return x>y?x:y;}
+    double min(double x,double y)
+    {return x<y?x:y;}
     enum direction
     {LEFT, RIGHT, UP, DOWN};
     class bullet
@@ -20,7 +25,7 @@ namespace __player
         {
             posX+=vX/tps;
             posY+=vY/tps;
-            vY+=gra/tps;
+            vY-=gra/tps;
         }
         bool checkinblock()
         {
@@ -232,10 +237,10 @@ namespace __player
                 return;
             }
         }
-        void updatedirection()
+        void updatedirection(bool p1,bool p2)
         {
-            if(Direction==1&&vX<0)Direction=0;
-            if(Direction==0&&vX>0)Direction=1;
+            if(p1&&!p2&&Direction)Direction=0;
+            if(!p1&&p2&&!Direction)Direction=1;
         }
         // check if the player is on ground
         bool onGround()
@@ -264,12 +269,17 @@ namespace __player
         void Toss(int tmp)
         {
             if(HurtCd)return;
-            L.push_back((bullet){posX+playerheight/2,posY+playerheight/2,TossSpeed,0,gravity,tmp});
+            L.push_back((bullet){
+                    posX+playerheight/2,
+                    posY+playerheight,
+                    Direction==1?std::max(TossSpeedX+vX,TossSpeedX):std::min(-TossSpeedX,-TossSpeedX+vX),                      TossSpeedY,
+                    gravity,
+                    tmp});
         }
         void Shoot(int tmp)
         {
             if(HurtCd)return;
-            L.push_back((bullet){posX+playerheight/2,posY+playerheight/2,ShootSpeed,0,0,tmp});
+            L.push_back((bullet){posX+playerheight/2,posY+playerheight,Direction==1?ShootSpeed:-ShootSpeed,0,0,tmp});
         }
         void Dash(bool p1,bool p2)
         {
