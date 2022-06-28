@@ -220,8 +220,8 @@ namespace __gameTick
 			if(jumpCoolDown) jumpCoolDown--;
             if(HurtCd) HurtCd--;
             double LposX = posX,LposY = posY;
-			posX += vX / tps, posY += vY / tps;
-			
+            posX += vX / tps, posY += vY / tps;
+            vY -= gravity / tps;
             fixStatus(LposX,LposY);
 			if(onGround())jumpCount = 0;
 		}
