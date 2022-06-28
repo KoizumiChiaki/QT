@@ -6,6 +6,7 @@
 #include <QPixmap>
 #include <QPainter>
 #include <QMainWindow>
+#include <vector>
 #include "constants.h"
 #include "gamemap.h"
 #include "gamemath.h"
@@ -51,8 +52,13 @@ namespace __gameTick
         P1.updatedirection();
         P2.updatedirection();
 		P1.move();
-		P2.move();
-		
+        P2.move();
+        std::list<bullet>::iterator it;
+        for(it=L.begin();it!=L.end();it++)
+        {
+            (*it).move();
+            if((*it).checkinblock())L.erase(it);
+        }
 		// rendering new graphics 
         // (maybe not implemented here?)
 		// TODO 
