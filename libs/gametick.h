@@ -16,19 +16,6 @@ using namespace std;
 
 namespace __gameTick
 {
-    class bullet
-    {
-    public:
-        int posX,posY;
-        int vX,vY;
-        int gra;
-        int owner;
-        bullet(){}
-        bullet(int _posX,int _posY,int _vX,int _vY,int _gra,int _owner)
-        {posX=_posX;posY=_posY;vX=_vX;vY=_vY;gra=_gra;owner=_owner;}
-        void move(){posX+=vX/tps,posY+=vY/tps,vY+=gra/tps;}
-    };
-    list<bullet>L;
     class player
 	{
 	public:
@@ -233,8 +220,8 @@ namespace __gameTick
 			if(jumpCoolDown) jumpCoolDown--;
             if(HurtCd) HurtCd--;
             double LposX = posX,LposY = posY;
-			posX += vX / tps, posY += vY / tps;
-            vY += gravity;
+            posX += vX / tps, posY += vY / tps;
+            vY += gravity / tps;
             fixStatus(LposX,LposY);
 			if(onGround())jumpCount = 0;
 		}
