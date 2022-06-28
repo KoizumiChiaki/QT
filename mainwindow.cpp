@@ -36,9 +36,14 @@ void MainWindow::keyReleaseEvent(QKeyEvent *ev)
 }
 void MainWindow::paintEvent(QPaintEvent *)
 {
-
     QPainter painter(this);
-    if (true)//
+    if (gameStatus == __gameTick::menu)
+    {
+        QPixmap bg(MainWindow::width(), MainWindow::height());
+        bg.fill(Qt::white);
+        painter.drawPixmap(0, 0, MainWindow::width(), MainWindow::height(), bg);
+    }
+    if (gameStatus == __gameTick::inGame)//
     {
         setTheme(desert);//Just for testing
         gameMap.mapInit();
@@ -57,13 +62,12 @@ void MainWindow::startGame()
     keyboardStatus.clear();
     __gameTick::P1.initialize(1, 16 - 0.5 * playerheight, 18);
     __gameTick::P2.initialize(0, 32 - 0.5 * playerheight, 18);
-    update();
     __gameTick::gameStatus = inGame;
-    for (int i = 1; i <= 100; i++)
+    for (int i = 1; i <= 20; i++)
     {
         __gameTick::tick();
-        update();
     }
+    update();
     /*int lastTickTime = clock();
     while(true)
     {
