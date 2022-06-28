@@ -100,6 +100,12 @@ namespace __player
                     jumpCoolDown = jumpCoolDownTicks;
                 }
             }
+            if(movDir == DOWN)
+            {
+                vY -= normalSpeed / tps;
+                if(vY < -verticalSpeedLimit)
+                    vY = -verticalSpeedLimit;
+            }
         }
         // check if a real position is in block
         bool checkinblock(double X,double Y)
