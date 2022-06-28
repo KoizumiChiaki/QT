@@ -39,7 +39,9 @@ namespace __gameTick
             P2.addMove(UP);
 		if(keyboardStatus.d2&&!keyboardStatus.u2)
             P2.addMove(DOWN);
-		
+
+        P1.updatedirection(keyboardStatus.l1,keyboardStatus.r1);
+        P2.updatedirection(keyboardStatus.l2,keyboardStatus.r2);
         // player skill
         if(keyboardStatus.toss1)P1.Toss(1);
         if(keyboardStatus.toss2)P2.Toss(2);
@@ -49,8 +51,7 @@ namespace __gameTick
         if(keyboardStatus.dash2)P2.Dash(keyboardStatus.l2,keyboardStatus.r2);
 
 		// player moving 
-        P1.updatedirection();
-        P2.updatedirection();
+
 		P1.move();
         P2.move();
         std::list<bullet>::iterator it;
