@@ -105,7 +105,7 @@ namespace __gameTick
 			{
 				if(jumpCoolDown == 0 && jumpCount != 2)
 				{
-					vY += jumpSpeed;
+                    vY = jumpSpeed;
 					if(vY > verticalSpeedLimit)
 						vY = verticalSpeedLimit;
 					jumpCount++;
@@ -295,10 +295,10 @@ namespace __gameTick
         // player skill
         if(keyboardStatus.toss1)P1.Toss(1);
         if(keyboardStatus.toss2)P2.Toss(2);
-        if(keyboardStatus.shoot1)P1.Shoot(1);
-        if(keyboardStatus.shoot2)P2.Shoot(2);
-        if(keyboardStatus.dash1)P1.Dash();
-        if(keyboardStatus.dash2)P2.Dash();
+       // if(keyboardStatus.shoot1)P1.Shoot(1);
+       // if(keyboardStatus.shoot2)P2.Shoot(2);
+       // if(keyboardStatus.dash1)P1.Dash();
+       // if(keyboardStatus.dash2)P2.Dash();
 
 		// player moving 
         P1.updatedirection();
