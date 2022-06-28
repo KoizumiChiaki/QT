@@ -19,6 +19,7 @@ const double verticalSpeedLimit = 40;
 // jump cd 
 const double playerheight = 0.8125;
 const unsigned int jumpCoolDownTicks = 10;
+const unsigned int dashCoolDownTicks = 15;
 const unsigned int HurtCdTicks = 10;
 // when not moving, Xspeed decrease alphaX times per tick
 const double alphaX = 1.12;
