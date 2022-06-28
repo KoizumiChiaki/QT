@@ -43,6 +43,7 @@ namespace __player
         bool inDash;
         // initialize player
         int HurtCd;
+        int DashCd;
         // TODO:
         // Hp, Mp
         // Special CD (if have)
@@ -247,10 +248,12 @@ namespace __player
         {
             if(jumpCoolDown) jumpCoolDown--;
             if(HurtCd) HurtCd--;
+            if(DashCd)DashCd--;
+            if(DashCd<10)inDash=0;
             double LposX = posX,LposY = posY;
-            vY -= gravity / tps;
+            if(!inDash)vY -= gravity / tps;
             if(vY < -verticalSpeedLimit)vY = -verticalSpeedLimit;
-            posX += vX / tps, posY += vY / tps;
+            posX += vX / tps;if(!inDash)posY += vY / tps;
             fixStatus(LposX,LposY);
             if(onGround())jumpCount = 0;
         }
@@ -258,6 +261,20 @@ namespace __player
         {
             if(HurtCd)return;
             L.push_back((bullet){posX+playerheight/2,posY+playerheight/2,TossSpeed,0,gravity,tmp});
+        }
+        void Shoot(int tmp)
+        {
+            if(HurtCd)return;
+            L.push_back((bullet){posX+playerheight/2,posY+playerheight/2,ShootSpeed,0,0,tmp});
+        }
+        void Dash(bool p1,bool p2)
+        {
+            if(DashCd||HurtCd)return;
+            else if(p1&&!p2){vX=-dashSpeedLimit;}
+            else if(!p1&&p2){vX=dashSpeedLimit;}
+            else {vX=(Direction==1?dashSpeedLimit:-dashSpeedLimit);}
+            vY=0;
+            inDash=1;DashCd=dashCoolDownTicks;
         }
         int GetPlayerHPRate(){return Hp * 100 / MaxHp;}
         QImage GetPlayerState()
