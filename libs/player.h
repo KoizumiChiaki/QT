@@ -231,7 +231,7 @@ namespace __player
         // check if the player is on ground
         bool onGround()
         {
-            if(checkinblock(posX,posY-eps)||checkinblock(posX+playerheight,posY-eps))return true;
+            if(checkinblock(posX+eps,posY-eps)||checkinblock(posX+playerheight-eps,posY-eps))return true;
             return false;
         }
         // decrease X exponently
