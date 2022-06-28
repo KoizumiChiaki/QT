@@ -5,7 +5,7 @@
 
 namespace __gameMath
 {
-    const double eps = 1e-9;
+    const double eps = 1e-6;
     const double INF = 0x3f3f3f3f;
 	
 	bool isInteger(const double v)
