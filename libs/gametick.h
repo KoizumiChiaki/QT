@@ -6,7 +6,9 @@
 #include <QPixmap>
 #include <QPainter>
 #include <QMainWindow>
+#include <QSound>
 
+#include "gamesound.h"
 #include "constants.h"
 #include "gamemap.h"
 #include "gamemath.h"
@@ -57,9 +59,12 @@ namespace __gameTick
         for(it=Bullet.begin();it!=Bullet.end();it++)
         {
             (*it).move();
-            if((*it).owner==1)if(P2.checkhit(*it))Bullet.erase(it),__player::CreateParticle((*it).posX-(*it).vX/tps,(*it).posY-(*it).vY/tps,4);
-            if((*it).owner==2)if(P1.checkhit(*it))Bullet.erase(it),__player::CreateParticle((*it).posX-(*it).vX/tps,(*it).posY-(*it).vY/tps,4);
-            if((*it).checkinblock())Bullet.erase(it),__player::CreateParticle((*it).posX-(*it).vX/tps,(*it).posY-(*it).vY/tps,4);
+            if((*it).owner==1)if(P2.checkhit(*it))Bullet.erase(it),__player::CreateParticle((*it).posX-(*it).vX/tps,(*it).posY-(*it).vY/tps,4),soundStatus.crash = true;
+            if((*it).owner==2)if(P1.checkhit(*it))Bullet.erase(it),__player::CreateParticle((*it).posX-(*it).vX/tps,(*it).posY-(*it).vY/tps,4),soundStatus.crash = true;
+            if((*it).checkinblock())
+            {
+                Bullet.erase(it),__player::CreateParticle((*it).posX-(*it).vX/tps,(*it).posY-(*it).vY/tps,4),soundStatus.crash = true;
+            }
         }
         std::list<particle>::iterator it2;
         for(it2=Particle.begin();it2!=Particle.end();it2++)

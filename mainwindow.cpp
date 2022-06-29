@@ -8,6 +8,7 @@
 #include<QPaintEvent>
 #include<QDebug>
 #include<QTimer>
+#include<QSound>
 
 #include<list>
 using std::list;
@@ -16,6 +17,7 @@ using std::list;
 #include"libs/gamemap.h"
 #include"libs/gametick.h"
 #include"libs/kbinput.h"
+#include"libs/gamesound.h"
 
 void MainWindow::keyPressEvent(QKeyEvent *ev)
 {
@@ -223,10 +225,17 @@ void MainWindow::startGame(int gameThemeId)
     gameMap.mapInit();
     update();
 }
+void MainWindow::soundPlay()
+{
+    if (soundStatus.crash == true)
+        crashSound->play();
+    soundStatus.soundInit();
+}
 void MainWindow::GlobalTick()
 {
     if (__gameTick::gameStatus == inGame)
         __gameTick::tick();
+    soundPlay();
     update();
     gameClock->start(timePerTick);
 }
@@ -255,6 +264,7 @@ MainWindow::MainWindow(QWidget *parent)
     setFixedSize(1280,960);
     gameClock->start(timePerTick);
     connect(gameClock, SIGNAL(timeout()), this, SLOT(GlobalTick()));
+    crashSound = new QSound("..\\QT\\resources\\sound\\crash.wav");
 }
 
 MainWindow::~MainWindow()
