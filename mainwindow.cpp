@@ -105,8 +105,8 @@ QImage PlayerState(int r1, int r2, int w1, int w2)//HP & MP 's percent
     temp.drawRoundRect(barSideWidth, barSideHeight + barDistance, barWidth * w1 / 100, barHeight, barRoundX, barRoundY);
     temp.drawRoundRect(screenWidth * 16 - 1 - barSideWidth - barWidth * w2 / 100, barSideHeight + barDistance, barWidth * w2 / 100, barHeight, barRoundX, barRoundY);
     //paint MP(full ver)
-    std::string dir1 = "..\\QT\\resources\\images\\player\\";
-    std::string dir2 = "..\\QT\\resources\\images\\player\\";
+    std::string dir1 = "..\\QT\\resources\\images\\player\\P1_";
+    std::string dir2 = "..\\QT\\resources\\images\\player\\P2_";
     if (r1 > 50)dir1 += "stay.png";
     else
         if (r1 > 0)dir1 += "injured_stay.png";
