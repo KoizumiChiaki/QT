@@ -80,6 +80,7 @@ namespace __player
         // Hp, Mp
         // Special CD (if have)
         // ...
+        int LavaCd;
         int HurtCd;
         int DashCd;
         int BulletCd;
@@ -163,7 +164,7 @@ namespace __player
         void fixStatus(double LX,double LY)
         {
             if(posX<0){posX=0,vX=0;return;}
-            if(posX>screenWidth-playerheight){posY=0,vY=0;return;}
+            if(posX>screenWidth-playerheight){posX=screenWidth-playerheight,vX=0;return;}
             int p1=checkinblock(posX,posY),
                     p2=checkinblock(posX+playerheight,posY),
                     p3=checkinblock(posX,posY+playerheight),
@@ -295,6 +296,15 @@ namespace __player
             if(checkinblock(posX+eps,posY-eps)||checkinblock(posX+playerheight-eps,posY-eps))return true;
             return false;
         }
+        bool inWater()
+        {
+            if(gameMap.getBlockType(int(posX+playerheight/2),int(posY+playerheight/2)) == liquid)
+            {
+                if(nowTheme == nether&&!LavaCd)Hurt(5),LavaCd=10;
+                return 1;
+            }
+            return 0;
+        }
         // decrease X exponently
         void diminishX()
         {
@@ -305,6 +315,7 @@ namespace __player
             if(Hp>0)Mp=min(Mp+1,100);
             if(jumpCoolDown) jumpCoolDown--;
             if(HurtCd) HurtCd--;
+            if(LavaCd) LavaCd--;
             if(DashCd) DashCd--;
             if(DashCd<5) inDash=0;
             if(BulletCd) BulletCd--;
@@ -315,6 +326,7 @@ namespace __player
             if(posY<-0.5){Hp=0;return;}
             fixStatus(LposX,LposY);
             if(onGround())jumpCount = 0;
+            if(inWater())jumpCount = 0;
         }
         void Toss(int tmp)
         {
