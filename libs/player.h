@@ -64,6 +64,7 @@ namespace __player
             Hp = MaxHp , Mp = MaxMp;
             inDash = false;
         }
+        void Hurt(int num){Hp=max(0,Hp-num);}
         bool checkhit(bullet tmp)
         {
             if(tmp.posX>=posX&&tmp.posX<=posX+playerheight
@@ -71,7 +72,7 @@ namespace __player
                     {
                         HurtCd=HurtCdTicks;
                         vX+=tmp.vX/4,vY+=tmp.vY/4;
-                        Hp-=5;
+                        Hurt(5);
                         return 1;
                     }
             return 0;
