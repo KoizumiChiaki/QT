@@ -15,7 +15,15 @@
 
 namespace __gameTick
 {
-
+    void CreateParticle(bullet tmp)
+    {
+        int cnt=rand()%3+4;
+        while(cnt--)
+            Particle.push_back((particle){
+                tmp.posX,tmp.posY,
+                rand()%(int(TossSpeedX)*2)-TossSpeedX,rand()%(int(TossSpeedY)*2)-TossSpeedY,
+                gravity});
+    }
     enum gameStatusEnum{menu,inGame,endGame,paused}gameStatus = menu;
     void tick()
 	{
@@ -55,12 +63,18 @@ namespace __gameTick
 		P1.move();
         P2.move();
         std::list<bullet>::iterator it;
-        for(it=L.begin();it!=L.end();it++)
+        for(it=Bullet.begin();it!=Bullet.end();it++)
         {
             (*it).move();
-            if((*it).owner==1)if(P2.checkhit(*it))L.erase(it);
-            if((*it).owner==2)if(P1.checkhit(*it))L.erase(it);
-            if((*it).checkinblock())L.erase(it);
+            if((*it).owner==1)if(P2.checkhit(*it))Bullet.erase(it),CreateParticle(*it);
+            if((*it).owner==2)if(P1.checkhit(*it))Bullet.erase(it),CreateParticle(*it);
+            if((*it).checkinblock())Bullet.erase(it),CreateParticle(*it);
+        }
+        std::list<particle>::iterator it2;
+        for(it2=Particle.begin();it2!=Particle.end();it2++)
+        {
+            (*it2).move();
+            if((*it).checkinblock())Particle.erase(it2);
         }
     }
 }
