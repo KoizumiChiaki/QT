@@ -3,6 +3,7 @@
 
 #include "gamemap.h"
 #include "gamemath.h"
+#include "gamesound.h"
 #include <QDebug>
 
 namespace __player
@@ -145,6 +146,7 @@ namespace __player
                     vY = jumpSpeed;
                     jumpCount++;
                     jumpCoolDown = jumpCoolDownTicks;
+                    soundStatus.jump = true;
                 }
             }
             if(movDir == DOWN)
@@ -172,7 +174,8 @@ namespace __player
                 if(vY<-particleLimit)
                     CreateParticle(posX,posY+0.1,2),
                     CreateParticle(posX+playerheight/2,posY+0.1,2),
-                    CreateParticle(posX+playerheight,posY+0.1,2);
+                    CreateParticle(posX+playerheight,posY+0.1,2),
+                    soundStatus.fall = true;;
                 if(vY<0)vY = 0;//Down
             }
             if(p3 && p4)
@@ -320,12 +323,14 @@ namespace __player
                     Direction==1?std::max(TossSpeedX+vX,TossSpeedX):std::min(-TossSpeedX,-TossSpeedX+vX),TossSpeedY,
                     gravity,
                     tmp});
+            soundStatus.shoot = true;
         }
         void Shoot(int tmp)
         {
             if(HurtCd||Mp<10||BulletCd)return;
             Mp-=10,BulletCd=BulletCdlimit;
             Bullet.push_back((bullet){posX+playerheight/2,posY+playerheight,Direction==1?ShootSpeed:-ShootSpeed,0,0,tmp});
+            soundStatus.shoot = true;
         }
         void Dash(bool p1,bool p2)
         {

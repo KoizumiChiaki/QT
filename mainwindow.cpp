@@ -229,6 +229,10 @@ void MainWindow::soundPlay()
 {
     if (soundStatus.crash == true)
         crashSound->play();
+    if (soundStatus.shoot == true)
+        shootSound->play();
+    if (soundStatus.jump == true)
+        jumpSound->play();
     soundStatus.soundInit();
 }
 void MainWindow::GlobalTick()
@@ -265,6 +269,8 @@ MainWindow::MainWindow(QWidget *parent)
     gameClock->start(timePerTick);
     connect(gameClock, SIGNAL(timeout()), this, SLOT(GlobalTick()));
     crashSound = new QSound("..\\QT\\resources\\sound\\crash.wav");
+    shootSound = new QSound("..\\QT\\resources\\sound\\shoot.wav");
+    jumpSound = new QSound("..\\QT\\resources\\sound\\jump.wav");
 }
 
 MainWindow::~MainWindow()
