@@ -26,15 +26,25 @@ void MainWindow::keyPressEvent(QKeyEvent *ev)
     }
     if(ev -> key() == Qt::Key_R)
     {
-        if(gameStatus == __gameTick::paused)
+        if(gameStatus == __gameTick::paused || gameStatus == __gameTick::endGame)
             backToMenu();
     }
     if(ev -> key() == Qt::Key_Space)
     {
-        if(gameStatus == __gameTick::endGame)
-            backToMenu();
-        if(gameStatus == __gameTick::inGame)
-            pauseGame();
+        switch (gameStatus)
+        {
+            case __gameTick::endGame:
+                backToMenu();
+            break;
+            case __gameTick::inGame:
+                pauseGame();
+            break;
+            case __gameTick::paused:
+                resumeGame();
+            break;
+            default:
+            break;
+        }
     }
     if(gameStatus == __gameTick::menu)
     {
@@ -148,12 +158,11 @@ void MainWindow::paintEvent(QPaintEvent *)
     QPainter painter(this);
     if (gameStatus == __gameTick::menu)
     {
-        QPixmap bg(MainWindow::width(), MainWindow::height());
-        bg.fill(Qt::white);
+        QPixmap bg("..\\QT\\resoureces\\images\\other\\start.png");
         painter.drawPixmap(0, 0, MainWindow::width(), MainWindow::height(), bg);
         return;
     }
-    if (gameStatus == __gameTick::inGame || gameStatus == __gameTick::paused)//
+    if (gameStatus == __gameTick::inGame || gameStatus == __gameTick::paused || gameStatus == __gameTick::endGame)//
     {
         QPixmap ms = QPixmap::fromImage(MapSolid()); //solid map
         QPixmap ml = QPixmap::fromImage(MapLiquid()); //liquid map
@@ -177,6 +186,16 @@ void MainWindow::paintEvent(QPaintEvent *)
         {
             QPixmap ps("..\\QT\\resources\\images\\other\\pause.png");
             temp.drawPixmap(0, 0, ps);// paint the pause picture
+        }
+        if (gameStatus == __gameTick::endGame)
+        {
+            std::string dir = "..\\QT\\resoureces\\images\\other\\over";
+            if (r1 == 0)
+                dir += "2.png";
+            else
+                dir += "1.png";
+            QPixmap ps(dir.c_str());
+            temp.drawPixmap(0, 0, ps);// paint the end picture
         }
         painter.drawPixmap(0, 0, MainWindow::width(), MainWindow::height(), QPixmap::fromImage(result));
         //print
@@ -216,6 +235,10 @@ void MainWindow::pauseGame()
     __gameTick::gameStatus = paused;
 }
 
+void MainWindow::resumeGame()
+{
+    __gameTick::gameStatus = inGame;
+}
 
 
 MainWindow::MainWindow(QWidget *parent)
