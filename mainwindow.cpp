@@ -26,7 +26,7 @@ void MainWindow::keyPressEvent(QKeyEvent *ev)
     }
     if(ev -> key() == Qt::Key_R)
     {
-        if(gameStatus == __gameTick::paused || gameStatus == __gameTick::endGame)
+        if(gameStatus == __gameTick::paused)
             backToMenu();
     }
     if(ev -> key() == Qt::Key_Space)
@@ -189,13 +189,14 @@ void MainWindow::paintEvent(QPaintEvent *)
         }
         if (gameStatus == __gameTick::endGame)
         {
-            std::string dir = "..\\QT\\resoureces\\images\\other\\over";
+            std::string dir = "..\\QT\\resources\\images\\other\\over";
             if (r1 == 0)
                 dir += "2.png";
             else
                 dir += "1.png";
-            QPixmap ps(dir.c_str());
-            temp.drawPixmap(0, 0, ps);// paint the end picture
+            QPixmap ps;
+            ps.load(dir.c_str());
+            temp.drawPixmap(0, 0, screenWidth * 16, screenHeight * 16, ps);// paint the end picture*/
         }
         painter.drawPixmap(0, 0, MainWindow::width(), MainWindow::height(), QPixmap::fromImage(result));
         //print
@@ -206,6 +207,8 @@ void MainWindow::paintEvent(QPaintEvent *)
 void MainWindow::startGame(int gameThemeId)
 {
     keyboardStatus.clear();
+    __player::Bullet.clear();
+    __player::Particle.clear();
     __player::P1.initialize(1, screenWidth / 3 * 1 - 0.5 * playerheight, screenHeight - 2);
     __player::P2.initialize(0, screenWidth / 3 * 2 - 0.5 * playerheight, screenHeight - 2);
     __gameTick::gameStatus = inGame;
