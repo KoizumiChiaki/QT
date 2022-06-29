@@ -101,6 +101,7 @@ namespace __gameMap
     }gameMap;
 }
 using __gameMap::setTheme;
+using __gameMap::nowTheme;
 using __gameMap::gameMap;
 using __gameMap::desert;
 using __gameMap::the_end;
