@@ -162,6 +162,8 @@ namespace __player
         // fix player position when hitting blocks
         void fixStatus(double LX,double LY)
         {
+            if(posX<0){posX=0,vX=0;return;}
+            if(posX>screenWidth-playerheight){posY=0,vY=0;return;}
             int p1=checkinblock(posX,posY),
                     p2=checkinblock(posX+playerheight,posY),
                     p3=checkinblock(posX,posY+playerheight),
@@ -310,6 +312,7 @@ namespace __player
             if(!inDash)vY -= gravity / tps;
             if(vY < -verticalSpeedLimit)vY = -verticalSpeedLimit;
             posX += vX / tps;if(!inDash)posY += vY / tps;
+            if(posY<-0.5){Hp=0;return;}
             fixStatus(LposX,LposY);
             if(onGround())jumpCount = 0;
         }
