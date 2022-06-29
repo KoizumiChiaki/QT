@@ -65,7 +65,7 @@ namespace __gameTick
         for(it2=Particle.begin();it2!=Particle.end();it2++)
         {
             (*it2).move();
-            if((*it).checkinblock())Particle.erase(it2);
+            if((*it2).checkinblock())Particle.erase(it2);
         }
     }
 }
