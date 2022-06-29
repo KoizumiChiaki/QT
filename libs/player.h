@@ -345,7 +345,7 @@ namespace __player
             Mp-=10,BulletCd=BulletCdlimit;
             Bullet.push_back((bullet){
                     posX+playerheight/2,
-                    posY+playerheight,
+                    posY+playerheight/2,
                     Direction==1?std::max(TossSpeedX+vX,TossSpeedX):std::min(-TossSpeedX,-TossSpeedX+vX),TossSpeedY,
                     gravity,
                     tmp});
