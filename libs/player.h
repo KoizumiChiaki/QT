@@ -5,6 +5,7 @@
 #include "gamemath.h"
 #include "gamesound.h"
 #include <QDebug>
+#include <QColor>
 
 namespace __player
 {
@@ -387,6 +388,17 @@ namespace __player
             tmp.load((dir+".png").c_str());
             if (Direction == 0)
                 tmp = tmp.mirrored(true, false);
+            if (TRedCd > 0)
+            {
+                QPainter now(&tmp);
+                QPen pen;
+                pen.setColor(QColor(0, 0, 0, 0));
+                QBrush brush;
+                brush.setColor(QColor(255, 0, 0, 120));// Back Color
+                brush.setStyle(Qt::SolidPattern);
+                now.setPen(pen), now.setBrush(brush);
+                now.drawRect(tmp.rect());
+            }
             QPainter painter(&ret);
             painter.drawPixmap((int)round(posX * 16), (int)round((screenHeight - posY) * 16) - 16 * playerheight, 16 * playerheight, 16 * playerheight, QPixmap::fromImage(tmp));
             return ret;
