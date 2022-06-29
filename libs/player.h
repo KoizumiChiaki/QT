@@ -70,6 +70,7 @@ namespace __player
                     &&tmp.posY>=posY&&tmp.posY<=posY+playerheight)
                     {
                         HurtCd=HurtCdTicks;
+                        vX+=tmp.vX/4,vY+=tmp.vY/4;
                         return 1;
                     }
             return 0;
