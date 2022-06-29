@@ -49,13 +49,13 @@ namespace __player
         int jumpCoolDown;
         // is in Dash
         bool inDash;
-        // initialize player
-        int HurtCd;
-        int DashCd;
         // TODO:
         // Hp, Mp
         // Special CD (if have)
         // ...
+        int HurtCd;
+        int DashCd;
+        // initialize player
         void initialize(int D,int X,int Y)
         {
             posX = X,posY = Y,Direction = D;
@@ -256,8 +256,8 @@ namespace __player
         {
             if(jumpCoolDown) jumpCoolDown--;
             if(HurtCd) HurtCd--;
-            if(DashCd)DashCd--;
-            if(DashCd<10)inDash=0;
+            if(DashCd) DashCd--;
+            if(DashCd<10) inDash=0;
             double LposX = posX,LposY = posY;
             if(!inDash)vY -= gravity / tps;
             if(vY < -verticalSpeedLimit)vY = -verticalSpeedLimit;

@@ -16,7 +16,7 @@
 namespace __gameTick
 {
 
-    enum gameStatusEnum{menu,inGame,endGame}gameStatus = menu;
+    enum gameStatusEnum{menu,inGame,endGame,paused}gameStatus = menu;
     void tick()
 	{
 		// player speed update 
@@ -60,9 +60,6 @@ namespace __gameTick
             (*it).move();
             if((*it).checkinblock())L.erase(it);
         }
-		// rendering new graphics 
-        // (maybe not implemented here?)
-		// TODO 
     }
 }
 using __gameTick::gameStatusEnum;
@@ -70,5 +67,6 @@ using __gameTick::gameStatus;
 using __gameTick::inGame;
 using __gameTick::menu;
 using __gameTick::endGame;
+using __gameTick::paused;
 
 #endif // _QTHWK_GAMETICK_H_

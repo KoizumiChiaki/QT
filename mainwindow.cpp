@@ -24,6 +24,11 @@ void MainWindow::keyPressEvent(QKeyEvent *ev)
         if(gameStatus != __gameTick::inGame)
             exit(0);
     }
+    if(ev -> key() == Qt::Key_R)
+    {
+        if(gameStatus == __gameTick::paused)
+            backToMenu();
+    }
     if(ev -> key() == Qt::Key_Space)
     {
         if(gameStatus == __gameTick::endGame)
@@ -31,29 +36,32 @@ void MainWindow::keyPressEvent(QKeyEvent *ev)
         if(gameStatus == __gameTick::inGame)
             pauseGame();
     }
-    if(ev -> key() == Qt::Key_1)
+    if(gameStatus == __gameTick::menu)
     {
-        startGame(1);
-    }
-    if(ev -> key() == Qt::Key_2)
-    {
-        startGame(2);
-    }
-    if(ev -> key() == Qt::Key_3)
-    {
-        startGame(3);
-    }
-    if(ev -> key() == Qt::Key_4)
-    {
-        startGame(4);
-    }
-    if(ev -> key() == Qt::Key_5)
-    {
-        startGame(5);
-    }
-    if(ev -> key() == Qt::Key_6)
-    {
-        startGame(6);
+        if(ev -> key() == Qt::Key_1)
+        {
+            startGame(1);
+        }
+        if(ev -> key() == Qt::Key_2)
+        {
+            startGame(2);
+        }
+        if(ev -> key() == Qt::Key_3)
+        {
+            startGame(3);
+        }
+        if(ev -> key() == Qt::Key_4)
+        {
+            startGame(4);
+        }
+        if(ev -> key() == Qt::Key_5)
+        {
+            startGame(5);
+        }
+        if(ev -> key() == Qt::Key_6)
+        {
+            startGame(6);
+        }
     }
     keyboardStatus.update(ev, true);
 }
@@ -172,11 +180,12 @@ void MainWindow::GlobalTick()
 }
 void MainWindow::backToMenu()
 {
-    // TODO
+    __gameTick::gameStatus = menu;
+    // printMenu();
 }
 void MainWindow::pauseGame()
 {
-    // TODO
+    __gameTick::gameStatus = paused;
 }
 
 
