@@ -71,6 +71,7 @@ namespace __player
                     {
                         HurtCd=HurtCdTicks;
                         vX+=tmp.vX/4,vY+=tmp.vY/4;
+                        Hp-=5;
                         return 1;
                     }
             return 0;
