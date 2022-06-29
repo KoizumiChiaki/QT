@@ -144,7 +144,7 @@ QImage AllParticle()
     list<__player::particle>::iterator it = __player::Particle.begin();
     while (it != __player::Particle.end())
     {
-        temp.drawPixmap((int)round((it -> posX) * 16 - 1), (int)round(screenHeight * 16 - 1 - (it -> posY) * 16 + 1), 2, 2, img);
+        temp.drawPixmap((int)round((it -> posX) * 16 - 2), (int)round(screenHeight * 16 - 1 - (it -> posY) * 16 + 2), 4, 4, img);
         it++;
     }
     return ret;
