@@ -64,7 +64,16 @@ namespace __player
             Hp = MaxHp , Mp = MaxMp;
             inDash = false;
         }
-
+        bool checkhit(bullet tmp)
+        {
+            if(tmp.posX>=posX&&tmp.posX<=posX+playerheight
+                    &&tmp.posY>=posY&&tmp.posY<=posY+playerheight)
+                    {
+                        HurtCd=HurtCdTicks;
+                        return 1;
+                    }
+            return 0;
+        }
         // add speed to the player
         void addMove(const direction movDir)
         {
