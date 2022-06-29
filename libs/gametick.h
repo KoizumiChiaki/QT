@@ -40,15 +40,15 @@ namespace __gameTick
 		if(keyboardStatus.d2&&!keyboardStatus.u2)
             P2.addMove(DOWN);
 
-        P1.updatedirection(keyboardStatus.l1,keyboardStatus.r1);
-        P2.updatedirection(keyboardStatus.l2,keyboardStatus.r2);
+        if(P1.Hp>0)P1.updatedirection(keyboardStatus.l1,keyboardStatus.r1);
+        if(P2.Hp>0)P2.updatedirection(keyboardStatus.l2,keyboardStatus.r2);
         // player skill
-        if(keyboardStatus.toss1)P1.Toss(1);
-        if(keyboardStatus.toss2)P2.Toss(2);
-        if(keyboardStatus.shoot1)P1.Shoot(1);
-        if(keyboardStatus.shoot2)P2.Shoot(2);
-        if(keyboardStatus.dash1)P1.Dash(keyboardStatus.l1,keyboardStatus.r1);
-        if(keyboardStatus.dash2)P2.Dash(keyboardStatus.l2,keyboardStatus.r2);
+        if(P1.Hp>0)if(keyboardStatus.toss1)P1.Toss(1);
+        if(P2.Hp>0)if(keyboardStatus.toss2)P2.Toss(2);
+        if(P1.Hp>0)if(keyboardStatus.shoot1)P1.Shoot(1);
+        if(P2.Hp>0)if(keyboardStatus.shoot2)P2.Shoot(2);
+        if(P1.Hp>0)if(keyboardStatus.dash1)P1.Dash(keyboardStatus.l1,keyboardStatus.r1);
+        if(P2.Hp>0)if(keyboardStatus.dash2)P2.Dash(keyboardStatus.l2,keyboardStatus.r2);
 
 		// player moving 
 
