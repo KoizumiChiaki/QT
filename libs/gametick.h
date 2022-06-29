@@ -58,6 +58,8 @@ namespace __gameTick
         for(it=L.begin();it!=L.end();it++)
         {
             (*it).move();
+            if((*it).owner==1)if(P2.checkhit(*it))L.erase(it);
+            if((*it).owner==2)if(P1.checkhit(*it))L.erase(it);
             if((*it).checkinblock())L.erase(it);
         }
     }
