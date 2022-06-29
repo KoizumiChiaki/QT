@@ -4,7 +4,6 @@
 #include "gamemap.h"
 #include "gamemath.h"
 #include <QDebug>
-using namespace std;
 
 namespace __player
 {

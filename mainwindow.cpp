@@ -8,13 +8,14 @@
 #include<QPaintEvent>
 #include<QDebug>
 #include<QTimer>
+
 #include<list>
 using std::list;
 
+#include"libs/constants.h"
+#include"libs/gamemap.h"
 #include"libs/gametick.h"
 #include"libs/kbinput.h"
-#include"libs/gamemap.h"
-#include"libs/constants.h"
 
 void MainWindow::keyPressEvent(QKeyEvent *ev)
 {
@@ -25,12 +26,34 @@ void MainWindow::keyPressEvent(QKeyEvent *ev)
     }
     if(ev -> key() == Qt::Key_Space)
     {
-        if(gameStatus == __gameTick::menu)
-            startGame();
         if(gameStatus == __gameTick::endGame)
             backToMenu();
         if(gameStatus == __gameTick::inGame)
             pauseGame();
+    }
+    if(ev -> key() == Qt::Key_1)
+    {
+        startGame(1);
+    }
+    if(ev -> key() == Qt::Key_2)
+    {
+        startGame(2);
+    }
+    if(ev -> key() == Qt::Key_3)
+    {
+        startGame(3);
+    }
+    if(ev -> key() == Qt::Key_4)
+    {
+        startGame(4);
+    }
+    if(ev -> key() == Qt::Key_5)
+    {
+        startGame(5);
+    }
+    if(ev -> key() == Qt::Key_6)
+    {
+        startGame(6);
     }
     keyboardStatus.update(ev, true);
 }
@@ -123,13 +146,18 @@ void MainWindow::paintEvent(QPaintEvent *)
 }
 
 
-void MainWindow::startGame()
+void MainWindow::startGame(int gameThemeId)
 {
     keyboardStatus.clear();
     __player::P1.initialize(1, screenWidth / 3 * 1 - 0.5 * playerheight, screenHeight - 2);
     __player::P2.initialize(0, screenWidth / 3 * 2 - 0.5 * playerheight, screenHeight - 2);
     __gameTick::gameStatus = inGame;
-    setTheme(mountains);//Just for testing
+    if(gameThemeId == 1)setTheme(plain);
+    if(gameThemeId == 2)setTheme(desert);
+    if(gameThemeId == 3)setTheme(ocean);
+    if(gameThemeId == 4)setTheme(mountains);
+    if(gameThemeId == 5)setTheme(nether);
+    if(gameThemeId == 6)setTheme(the_end);
     gameMap.mapInit();
     repaint();
 }

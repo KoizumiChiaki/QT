@@ -116,5 +116,4 @@ using __gameMap::solid;
 using __gameMap::liquid;
 using __gameMap::platform;
 
-
 #endif // _QTHWK_GAMEMAP_H_

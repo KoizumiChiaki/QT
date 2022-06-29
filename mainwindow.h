@@ -20,7 +20,7 @@ public:
     void keyPressEvent(QKeyEvent *ev);
     void keyReleaseEvent(QKeyEvent *ev);
     void paintEvent(QPaintEvent *);
-    void startGame();
+    void startGame(int gameThemeId);
     void backToMenu();
     void pauseGame();
     QTimer * gameClock;
