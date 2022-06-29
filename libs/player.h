@@ -80,7 +80,7 @@ namespace __player
         // Hp, Mp
         // Special CD (if have)
         // ...
-        int LavaCd;
+        int ContactCd;
         int HurtCd;
         int DashCd;
         int BulletCd;
@@ -300,7 +300,7 @@ namespace __player
         {
             if(gameMap.getBlockType(int(posX+playerheight/2),int(posY+playerheight/2)) == liquid)
             {
-                if(nowTheme == nether&&!LavaCd)Hurt(5),LavaCd=10;
+                if(nowTheme == nether&&!ContactCd)Hurt(5),ContactCd=10;
                 return 1;
             }
             return 0;
@@ -315,7 +315,7 @@ namespace __player
             if(Hp>0)Mp=min(Mp+1,100);
             if(jumpCoolDown) jumpCoolDown--;
             if(HurtCd) HurtCd--;
-            if(LavaCd) LavaCd--;
+            if(ContactCd) ContactCd--;
             if(DashCd) DashCd--;
             if(DashCd<5) inDash=0;
             if(BulletCd) BulletCd--;
