@@ -5,7 +5,7 @@ namespace __gameSound {
     class soundState
     {
     public:
-        bool crash, shoot, jump, fall;
+        bool crash, shoot, jump, fall, dead;
         //bullet crash
         //shoot bullet
         //jump
@@ -16,6 +16,7 @@ namespace __gameSound {
             shoot = false;
             jump = false;
             fall = false;
+            dead = false;
         }
     }soundStatus;
 }
