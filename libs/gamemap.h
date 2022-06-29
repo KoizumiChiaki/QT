@@ -58,6 +58,12 @@ namespace __gameMap
                 return solid;
             return sta[y][x];//0:empty, 1:solid, 2:liquid, 3:platform
         }
+        int getBlockId(int x, int y)
+        {
+            if (x < 0 || x >= screenWidth || y < 0 || y >= screenHeight)
+                return -1;
+            return map[y][x];
+        }
         QImage getWholeMapSolid() //print the whole map
         {
             QImage ret(screenWidth * 16, screenHeight * 16, QImage::Format_RGBA8888);
