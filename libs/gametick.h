@@ -6,7 +6,7 @@
 #include <QPixmap>
 #include <QPainter>
 #include <QMainWindow>
-#include <vector>
+
 #include "constants.h"
 #include "gamemap.h"
 #include "gamemath.h"
