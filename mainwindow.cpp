@@ -72,7 +72,7 @@ void MainWindow::keyReleaseEvent(QKeyEvent *ev)
 
 QImage MapSolid(){return gameMap.getWholeMapSolid();}
 QImage MapLiquid(){return gameMap.getWholeMapLiquid();}
-QImage PlayerState(int r1, int r2)
+QImage PlayerState(int r1, int r2, int w1, int w2)//HP & MP 's percent
 {
     QImage ret(screenWidth * 16, screenHeight * 16, QImage::Format_RGBA8888);
     QPainter temp(&ret);
@@ -96,8 +96,8 @@ QImage PlayerState(int r1, int r2)
     //paint HP(full ver)
     brush.setColor(QColor(0, 0, 255, barAlpha));// Blue
     temp.setBrush(brush);
-    temp.drawRoundRect(barSideWidth, barSideHeight + barDistance, barWidth * r1 / 100, barHeight, barRoundX, barRoundY);
-    temp.drawRoundRect(screenWidth * 16 - 1 - barSideWidth - barWidth * r2 / 100, barSideHeight + barDistance, barWidth * r2 / 100, barHeight, barRoundX, barRoundY);
+    temp.drawRoundRect(barSideWidth, barSideHeight + barDistance, barWidth * w1 / 100, barHeight, barRoundX, barRoundY);
+    temp.drawRoundRect(screenWidth * 16 - 1 - barSideWidth - barWidth * w2 / 100, barSideHeight + barDistance, barWidth * w2 / 100, barHeight, barRoundX, barRoundY);
     //paint MP(full ver)
 
     QImage h1("..\\QT\\resources\\images\\player\\stay.png");
@@ -139,7 +139,8 @@ void MainWindow::paintEvent(QPaintEvent *)
         QPixmap p2 = QPixmap::fromImage(__player::P2.GetPlayerState()); //player 2
         QPixmap bl = QPixmap::fromImage(AllBullet());
         int r1 = __player::P1.GetPlayerHPRate(), r2 = __player::P2.GetPlayerHPRate();
-        QPixmap st = QPixmap::fromImage(PlayerState(r1, r2));//state
+        int w1 = __player::P1.GetPlayerMPRate(), w2 = __player::P2.GetPlayerMPRate();
+        QPixmap st = QPixmap::fromImage(PlayerState(r1, r2, w1, w2));//state
         QImage result(screenWidth * 16, screenHeight * 16, QImage::Format_RGBA8888);
         QPainter temp(&result);
         temp.drawPixmap(0, 0, ms);// paint the map solid

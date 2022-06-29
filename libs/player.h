@@ -290,6 +290,7 @@ namespace __player
             inDash=1;DashCd=dashCoolDownTicks;
         }
         int GetPlayerHPRate(){return Hp * 100 / MaxHp;}
+        int GetPlayerMPRate(){return Mp * 100 / MaxMp;}
         QImage GetPlayerState()
         {
             QImage ret(screenWidth * 16, screenHeight * 16, QImage::Format_RGBA8888);
