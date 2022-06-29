@@ -32,6 +32,6 @@ public slots:
     void GlobalTick();
 private:
     Ui::MainWindow *ui;
-    QSound *crashSound, *shootSound, *jumpSound;
+    QSound *crashSound, *shootSound, *jumpSound, *fallSound, *deadSound;
 };
 #endif // MAINWINDOW_H

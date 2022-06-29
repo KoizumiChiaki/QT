@@ -182,7 +182,7 @@ namespace __player
                     CreateParticle(posX,posY+0.1,2),
                     CreateParticle(posX+playerheight/2,posY+0.1,2),
                     CreateParticle(posX+playerheight,posY+0.1,2),
-                    soundStatus.fall = true;;
+                    soundStatus.fall = true;
                 if(vY<0)vY = 0;//Down
             }
             if(p3 && p4)

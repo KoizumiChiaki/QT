@@ -73,7 +73,7 @@ namespace __gameTick
             if((*it2).checkinblock())Particle.erase(it2);
         }
         if (P1.Hp == 0 || P2.Hp == 0)
-            gameStatus = endGame;//gameOver
+            soundStatus.dead = true, gameStatus = endGame;//gameOver
     }
 }
 using __gameTick::gameStatusEnum;

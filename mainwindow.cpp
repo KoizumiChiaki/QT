@@ -234,6 +234,10 @@ void MainWindow::soundPlay()
         shootSound->play();
     if (soundStatus.jump == true)
         jumpSound->play();
+    if (soundStatus.fall == true)
+        fallSound->play();
+    if (soundStatus.dead == true)
+        deadSound->play();
     soundStatus.soundInit();
 }
 void MainWindow::GlobalTick()
@@ -272,6 +276,8 @@ MainWindow::MainWindow(QWidget *parent)
     crashSound = new QSound("..\\QT\\resources\\sound\\crash.wav");
     shootSound = new QSound("..\\QT\\resources\\sound\\shoot.wav");
     jumpSound = new QSound("..\\QT\\resources\\sound\\jump.wav");
+    fallSound = new QSound("..\\QT\\resources\\sound\\fall.wav");
+    deadSound = new QSound("..\\QT\\resources\\sound\\dead.wav");
     QMediaPlayer *BGM = new QMediaPlayer(this);//设置背景音乐
     QMediaPlaylist *BGMList = new QMediaPlaylist(this);
     BGMList->addMedia(QUrl::fromLocalFile("..\\QT\\resources\\sound\\bgm.wav"));
