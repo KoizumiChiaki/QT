@@ -80,6 +80,7 @@ namespace __player
         // Hp, Mp
         // Special CD (if have)
         // ...
+        int TRedCd;
         int ContactCd;
         int HurtCd;
         int DashCd;
@@ -93,7 +94,7 @@ namespace __player
             Hp = MaxHp , Mp = MaxMp;
             inDash = false;
         }
-        void Hurt(int num){Hp=max(0,Hp-num);}
+        void Hurt(int num){TRedCd=3;Hp=max(0,Hp-num);}
         bool checkhit(bullet tmp)
         {
             if(tmp.posX>=posX&&tmp.posX<=posX+playerheight
@@ -318,6 +319,7 @@ namespace __player
         void move()
         {
             if(Hp>0)Mp=min(Mp+1,100);
+            if(TRedCd)TRedCd--;
             if(jumpCoolDown) jumpCoolDown--;
             if(HurtCd) HurtCd--;
             if(ContactCd) ContactCd--;
