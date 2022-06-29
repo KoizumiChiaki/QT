@@ -57,9 +57,9 @@ namespace __gameTick
         for(it=Bullet.begin();it!=Bullet.end();it++)
         {
             (*it).move();
-            if((*it).owner==1)if(P2.checkhit(*it))Bullet.erase(it),__player::CreateParticle((*it).posX,(*it).posY,4);
-            if((*it).owner==2)if(P1.checkhit(*it))Bullet.erase(it),__player::CreateParticle((*it).posX,(*it).posY,4);
-            if((*it).checkinblock())Bullet.erase(it),__player::CreateParticle((*it).posX,(*it).posY,4);
+            if((*it).owner==1)if(P2.checkhit(*it))Bullet.erase(it),__player::CreateParticle((*it).posX-(*it).vX/tps,(*it).posY-(*it).vY/tps,4);
+            if((*it).owner==2)if(P1.checkhit(*it))Bullet.erase(it),__player::CreateParticle((*it).posX-(*it).vX/tps,(*it).posY-(*it).vY/tps,4);
+            if((*it).checkinblock())Bullet.erase(it),__player::CreateParticle((*it).posX-(*it).vX/tps,(*it).posY-(*it).vY/tps,4);
         }
         std::list<particle>::iterator it2;
         for(it2=Particle.begin();it2!=Particle.end();it2++)
