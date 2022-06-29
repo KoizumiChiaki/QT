@@ -81,6 +81,7 @@ namespace __player
         // ...
         int HurtCd;
         int DashCd;
+        int BulletCd;
         // initialize player
         void initialize(int D,int X,int Y)
         {
@@ -300,7 +301,8 @@ namespace __player
             if(jumpCoolDown) jumpCoolDown--;
             if(HurtCd) HurtCd--;
             if(DashCd) DashCd--;
-            if(DashCd<10) inDash=0;
+            if(DashCd<5) inDash=0;
+            if(BulletCd) BulletCd--;
             double LposX = posX,LposY = posY;
             if(!inDash)vY -= gravity / tps;
             if(vY < -verticalSpeedLimit)vY = -verticalSpeedLimit;
@@ -310,19 +312,19 @@ namespace __player
         }
         void Toss(int tmp)
         {
-            if(HurtCd||Mp<10)return;
-            Mp-=10;
+            if(HurtCd||Mp<10||BulletCd)return;
+            Mp-=10,BulletCd=BulletCdlimit;
             Bullet.push_back((bullet){
                     posX+playerheight/2,
                     posY+playerheight,
-                    Direction==1?std::max(TossSpeedX+vX,TossSpeedX):std::min(-TossSpeedX,-TossSpeedX+vX),                      TossSpeedY,
+                    Direction==1?std::max(TossSpeedX+vX,TossSpeedX):std::min(-TossSpeedX,-TossSpeedX+vX),TossSpeedY,
                     gravity,
                     tmp});
         }
         void Shoot(int tmp)
         {
-            if(HurtCd||Mp<10)return;
-            Mp-=10;
+            if(HurtCd||Mp<10||BulletCd)return;
+            Mp-=10,BulletCd=BulletCdlimit;
             Bullet.push_back((bullet){posX+playerheight/2,posY+playerheight,Direction==1?ShootSpeed:-ShootSpeed,0,0,tmp});
         }
         void Dash(bool p1,bool p2)
