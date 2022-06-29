@@ -158,7 +158,7 @@ void MainWindow::paintEvent(QPaintEvent *)
     QPainter painter(this);
     if (gameStatus == __gameTick::menu)
     {
-        QPixmap bg("..\\QT\\resoureces\\images\\other\\start.png");
+        QPixmap bg("..\\QT\\resources\\images\\other\\start.png");
         painter.drawPixmap(0, 0, MainWindow::width(), MainWindow::height(), bg);
         return;
     }
