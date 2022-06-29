@@ -23,6 +23,7 @@ public:
     void startGame(int gameThemeId);
     void backToMenu();
     void pauseGame();
+    void resumeGame();
     QTimer * gameClock;
 public slots:
     void GlobalTick();
