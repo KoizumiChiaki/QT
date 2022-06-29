@@ -13,9 +13,26 @@ namespace __player
     {return x<y?x:y;}
     enum direction
     {LEFT, RIGHT, UP, DOWN};
+    class particle{
+    public:
+        double posX,posY;
+        double vX,vY;
+        double gra;
+        void move()
+        {
+            posX+=vX/tps;
+            posY+=vY/tps;
+            vY-=gra/tps;
+        }
+        bool checkinblock()
+        {
+            return gameMap.getBlockType(int(posX),int(posY)) == solid;
+        }
+    };
+    std::list<particle>Particle;
     class bullet
     {
-        public:
+    public:
         double posX, posY;
         double vX, vY;
         double gra;
@@ -31,7 +48,7 @@ namespace __player
             return gameMap.getBlockType(int(posX),int(posY)) == solid;
         }
     };
-    std::list<bullet>L;
+    std::list<bullet>Bullet;
 
     class player
     {
@@ -282,7 +299,7 @@ namespace __player
         {
             if(HurtCd||Mp<10)return;
             Mp-=10;
-            L.push_back((bullet){
+            Bullet.push_back((bullet){
                     posX+playerheight/2,
                     posY+playerheight,
                     Direction==1?std::max(TossSpeedX+vX,TossSpeedX):std::min(-TossSpeedX,-TossSpeedX+vX),                      TossSpeedY,
@@ -293,7 +310,7 @@ namespace __player
         {
             if(HurtCd||Mp<10)return;
             Mp-=10;
-            L.push_back((bullet){posX+playerheight/2,posY+playerheight,Direction==1?ShootSpeed:-ShootSpeed,0,0,tmp});
+            Bullet.push_back((bullet){posX+playerheight/2,posY+playerheight,Direction==1?ShootSpeed:-ShootSpeed,0,0,tmp});
         }
         void Dash(bool p1,bool p2)
         {
@@ -332,7 +349,9 @@ namespace __player
 }
 
 using __player::bullet;
-using __player::L;
+using __player::Bullet;
+using __player::particle;
+using __player::Particle;
 using __player::P1;
 using __player::P2;
 using __player::direction;
