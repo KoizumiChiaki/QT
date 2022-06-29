@@ -295,6 +295,10 @@ namespace __player
             if(checkinblock(posX+eps,posY-eps)||checkinblock(posX+playerheight-eps,posY-eps))return true;
             return false;
         }
+        bool inWater()
+        {
+            return gameMap.getBlockType(int(posX+playerheight/2),int(posY+playerheight/2)) == liquid;
+        }
         // decrease X exponently
         void diminishX()
         {
@@ -315,6 +319,7 @@ namespace __player
             if(posY<-0.5){Hp=0;return;}
             fixStatus(LposX,LposY);
             if(onGround())jumpCount = 0;
+            if(inWater())jumpCount = 0;
         }
         void Toss(int tmp)
         {
