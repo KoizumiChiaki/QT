@@ -266,6 +266,7 @@ namespace __player
         }
         void move()
         {
+            if(Hp>0)Mp=min(Mp+1,100);
             if(jumpCoolDown) jumpCoolDown--;
             if(HurtCd) HurtCd--;
             if(DashCd) DashCd--;
@@ -279,7 +280,8 @@ namespace __player
         }
         void Toss(int tmp)
         {
-            if(HurtCd)return;
+            if(HurtCd||Mp<10)return;
+            Mp-=10;
             L.push_back((bullet){
                     posX+playerheight/2,
                     posY+playerheight,
@@ -289,7 +291,8 @@ namespace __player
         }
         void Shoot(int tmp)
         {
-            if(HurtCd)return;
+            if(HurtCd||Mp<10)return;
+            Mp-=10;
             L.push_back((bullet){posX+playerheight/2,posY+playerheight,Direction==1?ShootSpeed:-ShootSpeed,0,0,tmp});
         }
         void Dash(bool p1,bool p2)
