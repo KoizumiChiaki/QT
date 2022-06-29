@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QKeyEvent>
 #include <QTimer>
+#include <QSound>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -24,10 +25,12 @@ public:
     void backToMenu();
     void pauseGame();
     void resumeGame();
+    void soundPlay();
     QTimer * gameClock;
 public slots:
     void GlobalTick();
 private:
     Ui::MainWindow *ui;
+    QSound *BGM, *crashSound, *shootSound, *jumpSound;
 };
 #endif // MAINWINDOW_H
