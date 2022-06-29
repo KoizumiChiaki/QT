@@ -15,6 +15,7 @@ const double jumpSpeed = 40;
 // speed limits 
 const double normalSpeedLimit = 20;
 const double dashSpeedLimit = 40;
+const double particleLimit = 30;
 const double verticalSpeedLimit = 40;
 // jump cd 
 const double playerheight = 0.8125;

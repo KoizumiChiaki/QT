@@ -30,6 +30,15 @@ namespace __player
         }
     };
     std::list<particle>Particle;
+    void CreateParticle(double posX,double posY,int num)
+    {
+        int cnt=rand()%3+num;
+        while(cnt--)
+            Particle.push_back((particle){
+                posX,posY,
+                rand()%(int(TossSpeedX)*2)-TossSpeedX,rand()%(int(TossSpeedY)*2)-TossSpeedY,
+                gravity});
+    }
     class bullet
     {
     public:
@@ -159,6 +168,10 @@ namespace __player
             if(p1 && p2)
             {
                 posY = int(posY) + 1;
+                if(vY<-particleLimit)
+                    CreateParticle(posX,posY+0.1,2),
+                    CreateParticle(posX+playerheight/2,posY+0.1,2),
+                    CreateParticle(posX+playerheight,posY+0.1,2);
                 if(vY<0)vY = 0;//Down
             }
             if(p3 && p4)
