@@ -9,6 +9,7 @@
 #include<QDebug>
 #include<QTimer>
 #include<QSound>
+#include<QMediaPlaylist>
 
 #include<list>
 using std::list;
@@ -271,6 +272,13 @@ MainWindow::MainWindow(QWidget *parent)
     crashSound = new QSound("..\\QT\\resources\\sound\\crash.wav");
     shootSound = new QSound("..\\QT\\resources\\sound\\shoot.wav");
     jumpSound = new QSound("..\\QT\\resources\\sound\\jump.wav");
+    QMediaPlayer *BGM = new QMediaPlayer(this);//设置背景音乐
+    QMediaPlaylist *BGMList = new QMediaPlaylist(this);
+    BGMList->addMedia(QUrl::fromLocalFile("..\\QT\\resources\\sound\\bgm.wav"));
+    BGMList -> setPlaybackMode(QMediaPlaylist::Loop);
+    BGM -> setPlaylist(BGMList);
+    BGM -> setVolume(50);
+    BGM -> play();
 }
 
 MainWindow::~MainWindow()
