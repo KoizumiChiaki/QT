@@ -269,10 +269,12 @@ MainWindow::MainWindow(QWidget *parent)
     , gameClock(new QTimer(this))
     , ui(new Ui::MainWindow)
 {
+
     ui->setupUi(this);
     setFixedSize(1280,960);
     gameClock->start(timePerTick);
     connect(gameClock, SIGNAL(timeout()), this, SLOT(GlobalTick()));
+    setWindowIcon(QIcon("..\\QT\\resources\\images\\icon\\logo.ico"));
     crashSound = new QSound("..\\QT\\resources\\sound\\crash.wav");
     shootSound = new QSound("..\\QT\\resources\\sound\\shoot.wav");
     jumpSound = new QSound("..\\QT\\resources\\sound\\jump.wav");
