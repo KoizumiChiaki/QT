@@ -130,8 +130,9 @@ void MainWindow::paintEvent(QPaintEvent *)
         QPixmap bg(MainWindow::width(), MainWindow::height());
         bg.fill(Qt::white);
         painter.drawPixmap(0, 0, MainWindow::width(), MainWindow::height(), bg);
+        return;
     }
-    if (gameStatus == __gameTick::inGame)//
+    if (gameStatus == __gameTick::inGame || gameStatus == __gameTick::paused)//
     {
         QPixmap ms = QPixmap::fromImage(MapSolid()); //solid map
         QPixmap ml = QPixmap::fromImage(MapLiquid()); //liquid map
@@ -149,6 +150,11 @@ void MainWindow::paintEvent(QPaintEvent *)
         temp.drawPixmap(0, 0, ml);// paint the map liquid
         temp.drawPixmap(0, 0, bl);// paint the map liquid
         temp.drawPixmap(0, 0, st);// paint the map liquid
+        if (true)//gameStatus == __gameTick::paused)
+        {
+            QPixmap ps("..\\QT\\resources\\images\\other\\pause.png");
+            temp.drawPixmap(0, 0, ps);// paint the pause picture
+        }
         painter.drawPixmap(0, 0, MainWindow::width(), MainWindow::height(), QPixmap::fromImage(result));
         //print
     }
