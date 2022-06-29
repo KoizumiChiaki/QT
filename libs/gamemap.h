@@ -32,7 +32,7 @@ namespace __gameMap
         theme themeType;
         block sta[screenHeight][screenWidth];
         const enum block typ[25] = {
-        empty, solid, empty, solid, solid, empty, liquid, liquid, solid, solid,
+        empty, empty, empty, solid, solid, empty, liquid, liquid, solid, solid,
         liquid, solid, solid, solid, solid, solid, solid, solid, empty, liquid,
         solid };
     public:
