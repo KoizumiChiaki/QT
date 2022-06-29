@@ -163,7 +163,7 @@ namespace __player
         void fixStatus(double LX,double LY)
         {
             if(posX<0){posX=0,vX=0;return;}
-            if(posX>screenWidth-playerheight){posY=0,vY=0;return;}
+            if(posX>screenWidth-playerheight){posX=screenWidth-playerheight,vX=0;return;}
             int p1=checkinblock(posX,posY),
                     p2=checkinblock(posX+playerheight,posY),
                     p3=checkinblock(posX,posY+playerheight),
