@@ -15,7 +15,7 @@
 
 namespace __gameTick
 {
-    enum gameStatusEnum{menu,inGame,endGame,paused}gameStatus = menu;
+    enum gameStatusEnum{menu,inGame,endGame,paused,mapset}gameStatus = menu;
     void tick()
 	{
 		// player speed update 

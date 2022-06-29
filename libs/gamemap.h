@@ -20,7 +20,7 @@ namespace __gameMap
     const string themeName[6] = { "desert", "end", "mountains", "nether", "ocean", "plain" };
     enum theme { desert, the_end, mountains, nether, ocean, plain } nowTheme;
     enum block { empty, solid, liquid, platform };
-
+    int tmpThemeId = 1;
     // 48 * 36 screen
     void setTheme(theme x){nowTheme = x;}
 

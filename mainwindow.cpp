@@ -42,36 +42,29 @@ void MainWindow::keyPressEvent(QKeyEvent *ev)
             case __gameTick::paused:
                 resumeGame();
             break;
-            default:
+            case __gameTick::menu:
+                gameStatus = __gameTick::mapset;
+            break;
+            case __gameTick::mapset:
+                startGame(__gameMap::tmpThemeId);
             break;
         }
     }
-    if(gameStatus == __gameTick::menu)
+    if(gameStatus == __gameTick::mapset)
     {
-        if(ev -> key() == Qt::Key_1)
+        if(ev -> key() == Qt::Key_Left || ev -> key() == Qt::Key_A)
         {
-            startGame(1);
+            __gameMap::tmpThemeId--;
+            if (__gameMap::tmpThemeId == 0)
+                __gameMap::tmpThemeId = themeNumber;
         }
-        if(ev -> key() == Qt::Key_2)
+        if(ev -> key() == Qt::Key_Right || ev -> key() == Qt::Key_D)
         {
-            startGame(2);
+            __gameMap::tmpThemeId++;
+            if (__gameMap::tmpThemeId > themeNumber)
+                __gameMap::tmpThemeId = 1;
         }
-        if(ev -> key() == Qt::Key_3)
-        {
-            startGame(3);
-        }
-        if(ev -> key() == Qt::Key_4)
-        {
-            startGame(4);
-        }
-        if(ev -> key() == Qt::Key_5)
-        {
-            startGame(5);
-        }
-        if(ev -> key() == Qt::Key_6)
-        {
-            startGame(6);
-        }
+
     }
     keyboardStatus.update(ev, true);
 }
@@ -162,6 +155,14 @@ void MainWindow::paintEvent(QPaintEvent *)
         painter.drawPixmap(0, 0, MainWindow::width(), MainWindow::height(), bg);
         return;
     }
+    if (gameStatus == __gameTick::mapset)
+    {
+        std::string dir = "..\\QT\\resources\\images\\other\\";
+        dir += std::to_string(__gameMap::tmpThemeId) + ".png";
+        QPixmap bg(dir.c_str());
+        painter.drawPixmap(0, 0, MainWindow::width(), MainWindow::height(), bg);
+        return;
+    }
     if (gameStatus == __gameTick::inGame || gameStatus == __gameTick::paused || gameStatus == __gameTick::endGame)//
     {
         QPixmap ms = QPixmap::fromImage(MapSolid()); //solid map
@@ -200,6 +201,7 @@ void MainWindow::paintEvent(QPaintEvent *)
         }
         painter.drawPixmap(0, 0, MainWindow::width(), MainWindow::height(), QPixmap::fromImage(result));
         //print
+        return;
     }
 }
 

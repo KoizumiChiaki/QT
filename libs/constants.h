@@ -42,4 +42,6 @@ const int barDistance = 16;
 //HP & MP bar
 const int headSize = 40;
 
+const int themeNumber = 6;
+
 #endif // _QTHWK_CONSTANTS_H_
