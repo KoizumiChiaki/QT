@@ -214,8 +214,8 @@ void MainWindow::startGame(int gameThemeId)
     keyboardStatus.clear();
     __player::Bullet.clear();
     __player::Particle.clear();
-    __player::P1.initialize(1, screenWidth / 3 * 1 - 0.5 * playerheight, screenHeight - 2);
-    __player::P2.initialize(0, screenWidth / 3 * 2 - 0.5 * playerheight, screenHeight - 2);
+    __player::P1.initialize(1, 1, screenWidth / 3 * 1 - 0.5 * playerheight, screenHeight - 2);
+    __player::P2.initialize(2, 0, screenWidth / 3 * 2 - 0.5 * playerheight, screenHeight - 2);
     __gameTick::gameStatus = inGame;
     if(gameThemeId == 1)setTheme(plain);
     if(gameThemeId == 2)setTheme(desert);

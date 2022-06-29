@@ -64,6 +64,7 @@ namespace __player
     {
     public:
         // Hp
+        int ID;
         int Hp,Mp;
         bool Direction;//0 Left 1 Right
         // location
@@ -86,8 +87,9 @@ namespace __player
         int DashCd;
         int BulletCd;
         // initialize player
-        void initialize(int D,int X,int Y)
+        void initialize(int Id,int D,int X,int Y)
         {
+            ID=Id;
             posX = X,posY = Y,Direction = D;
             vX = 0, vY = 0;
             jumpCount = 0, jumpCoolDown = 0;
@@ -370,6 +372,8 @@ namespace __player
         {
             QImage ret(screenWidth * 16, screenHeight * 16, QImage::Format_RGBA8888);
             std::string dir = "..\\QT\\resources\\images\\player\\";
+            if(ID==1)dir+="P1_";
+            else dir+="P2_";
             if(Hp<=MaxHp/2)dir+="injured_";
             if(Hp<=0)dir+="dead";
             else if(HurtCd)dir+="hurt";
