@@ -214,8 +214,6 @@ void MainWindow::startGame(int gameThemeId)
     keyboardStatus.clear();
     __player::Bullet.clear();
     __player::Particle.clear();
-    __player::P1.initialize(1, 1, screenWidth / 3 * 1 - 0.5 * playerheight, screenHeight - 2);
-    __player::P2.initialize(2, 0, screenWidth / 3 * 2 - 0.5 * playerheight, screenHeight - 2);
     __gameTick::gameStatus = inGame;
     if(gameThemeId == 1)setTheme(plain);
     if(gameThemeId == 2)setTheme(desert);
@@ -224,6 +222,8 @@ void MainWindow::startGame(int gameThemeId)
     if(gameThemeId == 5)setTheme(nether);
     if(gameThemeId == 6)setTheme(the_end);
     gameMap.mapInit();
+    __player::P1.initialize(1, 1, screenWidth / 3 * 1 - 4.5 * playerheight, gameMap.getStartHeight(1));
+    __player::P2.initialize(2, 0, screenWidth / 3 * 2 + 3.5 * playerheight, gameMap.getStartHeight(2));
     update();
 }
 void MainWindow::soundPlay()

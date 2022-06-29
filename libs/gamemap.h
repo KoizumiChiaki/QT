@@ -23,7 +23,6 @@ namespace __gameMap
     int tmpThemeId = 1;
     // 48 * 36 screen
     void setTheme(theme x){nowTheme = x;}
-
     class gameMapStructure
     {
     private:
@@ -31,6 +30,7 @@ namespace __gameMap
         int map[screenHeight][screenWidth];
         theme themeType;
         block sta[screenHeight][screenWidth];
+        int sth[2];
         const enum block typ[25] = {
         empty, empty, empty, solid, solid, empty, liquid, liquid, solid, solid,
         liquid, solid, solid, solid, solid, solid, solid, solid, empty, liquid,
@@ -51,6 +51,7 @@ namespace __gameMap
                     sta[i][j] = typ[map[i][j]];
                 }
             }
+            fscanf(Input, "%d%d", &sth[0], &sth[1]);
         }
         enum block getBlockType(int x, int y) //(x, y)
         {
@@ -104,6 +105,7 @@ namespace __gameMap
             painter.fillRect(ret.rect(), QColor(0, 0, 0, 170));
             return ret;
         }
+        int getStartHeight(int playerid){return sth[playerid - 1];}
     }gameMap;
 }
 using __gameMap::setTheme;
