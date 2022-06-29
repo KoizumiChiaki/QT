@@ -305,6 +305,11 @@ namespace __player
             }
             return 0;
         }
+        void checkcactus()
+        {
+            if(gameMap.getBlockId(int(posX+playerheight/2),int(posY+playerheight/2))==1)
+                if(!ContactCd)Hurt(5),ContactCd=10;
+        }
         // decrease X exponently
         void diminishX()
         {
@@ -327,6 +332,7 @@ namespace __player
             fixStatus(LposX,LposY);
             if(onGround())jumpCount = 0;
             if(inWater())jumpCount = 0;
+            checkcactus();
         }
         void Toss(int tmp)
         {
