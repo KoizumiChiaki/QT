@@ -150,7 +150,7 @@ void MainWindow::paintEvent(QPaintEvent *)
         temp.drawPixmap(0, 0, ml);// paint the map liquid
         temp.drawPixmap(0, 0, bl);// paint the map liquid
         temp.drawPixmap(0, 0, st);// paint the map liquid
-        if (true)//gameStatus == __gameTick::paused)
+        if (gameStatus == __gameTick::paused)
         {
             QPixmap ps("..\\QT\\resources\\images\\other\\pause.png");
             temp.drawPixmap(0, 0, ps);// paint the pause picture
@@ -174,15 +174,13 @@ void MainWindow::startGame(int gameThemeId)
     if(gameThemeId == 5)setTheme(nether);
     if(gameThemeId == 6)setTheme(the_end);
     gameMap.mapInit();
-    repaint();
+    update();
 }
 void MainWindow::GlobalTick()
 {
     if (__gameTick::gameStatus == inGame)
-    {
         __gameTick::tick();
-        repaint();
-    }
+    update();
     gameClock->start(timePerTick);
 }
 void MainWindow::backToMenu()
