@@ -9,7 +9,7 @@ const unsigned int tps = 60;
 const double gravity = 200;
 // speed det per second 
 const double normalSpeed = 200;
-const double dashSpeed = 600;
+const double dashSpeed = 400;
 // vY increment per jump  
 const double jumpSpeed = 40;
 // speed limits 
@@ -29,7 +29,7 @@ const int MaxMp = 100;
 const double TossSpeedX = 20;
 const double TossSpeedY = 10;
 const double ShootSpeed = 40;
-const int BulletCdlimit=5;
+const int BulletCdlimit=10;
 
 const int barWidth = 200;
 const int barHeight = 10;

@@ -50,7 +50,6 @@ namespace __gameMap
                 for (int j = 0; j < screenWidth; j++)
                 {
                     Reader >> tmp;
-                    qDebug() << tmp;
                     map[i][j] = tmp;
                     sta[i][j] = typ[map[i][j]];
                 }
