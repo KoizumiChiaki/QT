@@ -6,17 +6,17 @@ const int timePerTick = 15;
 const int screenWidth = 48, screenHeight = 36;
 const unsigned int tps = 60;
 // gravity (vY diminishing speed per second) 
-const double gravity = 200;
+const double gravity = 120;
 // speed det per second 
-const double normalSpeed = 200;
-const double dashSpeed = 400;
+const double normalSpeed = 100;
+const double dashSpeed = 200;
 // vY increment per jump  
-const double jumpSpeed = 40;
+const double jumpSpeed = 30;
 // speed limits 
-const double normalSpeedLimit = 20;
-const double dashSpeedLimit = 40;
-const double particleLimit = 30;
-const double verticalSpeedLimit = 40;
+const double normalSpeedLimit = 10;
+const double dashSpeedLimit = 20;
+const double particleLimit = 15;
+const double verticalSpeedLimit = 20;
 // jump cd 
 const double playerheight = 0.8125;
 const unsigned int jumpCoolDownTicks = 10;
@@ -26,8 +26,8 @@ const unsigned int HurtCdTicks = 5;
 const double alphaX = 1.12;
 const int MaxHp = 100;
 const int MaxMp = 100;
-const double TossSpeedX = 20;
-const double TossSpeedY = 10;
+const double TossSpeedX = 15;
+const double TossSpeedY = 8;
 const double ShootSpeed = 40;
 const int BulletCdlimit=10;
 

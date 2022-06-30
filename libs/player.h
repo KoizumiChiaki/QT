@@ -353,8 +353,8 @@ namespace __player
         }
         void Shoot(int tmp)
         {
-            if(HurtCd||Mp<10||BulletCd)return;
-            Mp-=10,BulletCd=BulletCdlimit;
+            if(HurtCd||Mp<15||BulletCd)return;
+            Mp-=15,BulletCd=BulletCdlimit;
             Bullet.push_back((bullet){posX+playerheight/2,posY+playerheight,Direction==1?ShootSpeed:-ShootSpeed,0,0,tmp});
             soundStatus.shoot = true;
         }
