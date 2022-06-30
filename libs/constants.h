@@ -13,15 +13,15 @@ const double dashSpeed = 200;
 // vY increment per jump  
 const double jumpSpeed = 30;
 // speed limits 
-const double normalSpeedLimit = 10;
-const double dashSpeedLimit = 20;
+const double normalSpeedLimit = 15;
+const double dashSpeedLimit = 25;
 const double particleLimit = 15;
 const double verticalSpeedLimit = 20;
 // jump cd 
 const double playerheight = 0.8125;
-const unsigned int jumpCoolDownTicks = 10;
-const unsigned int dashCoolDownTicks = 10;
-const unsigned int HurtCdTicks = 5;
+const unsigned int jumpCoolDownTicks = 20;
+const unsigned int dashCoolDownTicks = 20;
+const unsigned int HurtCdTicks = 10;
 // when not moving, Xspeed decrease alphaX times per tick
 const double alphaX = 1.12;
 const int MaxHp = 100;
