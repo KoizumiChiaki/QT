@@ -213,6 +213,8 @@ void MainWindow::startGame(int gameThemeId)
     keyboardStatus.clear();
     __player::Bullet.clear();
     __player::Particle.clear();
+    __player::P1.TRedCd = 0;
+    __player::P2.TRedCd = 0;
     __gameTick::gameStatus = inGame;
     if(gameThemeId == 1)setTheme(plain);
     if(gameThemeId == 2)setTheme(desert);
