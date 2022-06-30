@@ -6,6 +6,7 @@
 #include <QPixmap>
 #include <QPainter>
 #include <QDebug>
+#include <QFile>
 
 #include <cstdio>
 #include <string>
@@ -14,9 +15,9 @@ namespace __gameMap
 {
     using std::string;
 
-    const string dir1 = "..\\QT\\resources\\images\\base\\";
-    const string dir2 = "..\\QT\\resources\\images\\environment\\";
-    const string dir3 = "..\\QT\\resources\\images\\background\\";
+    const string dir1 = ":\\resources\\images\\base\\";
+    const string dir2 = ":\\resources\\images\\environment\\";
+    const string dir3 = ":\\resources\\images\\background\\";
     const string themeName[6] = { "desert", "end", "mountains", "nether", "ocean", "plain" };
     enum theme { desert, the_end, mountains, nether, ocean, plain } nowTheme;
     enum block { empty, solid, liquid, platform };
@@ -40,18 +41,21 @@ namespace __gameMap
         {
             themeType = nowTheme;
             source = dir1 + themeName[(unsigned int)nowTheme] + ".txt";
-            FILE* Input = fopen(source.c_str(), "r");
+            QFile Input(source.c_str());
+            Input.open(QIODevice::ReadOnly);
+            QTextStream Reader(&Input);
             for (int i = screenHeight - 1; i >= 0; i--)
             {
                 int tmp;
                 for (int j = 0; j < screenWidth; j++)
                 {
-                    fscanf(Input, "%d", &tmp);
+                    Reader >> tmp;
+                    qDebug() << tmp;
                     map[i][j] = tmp;
                     sta[i][j] = typ[map[i][j]];
                 }
             }
-            fscanf(Input, "%d%d", &sth[0], &sth[1]);
+            Reader >> sth[0] >> sth[1];
         }
         enum block getBlockType(int x, int y) //(x, y)
         {

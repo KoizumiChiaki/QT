@@ -9,7 +9,6 @@
 #include<QDebug>
 #include<QTimer>
 #include<QSound>
-#include<QMediaPlaylist>
 
 #include<list>
 using std::list;
@@ -105,8 +104,8 @@ QImage PlayerState(int r1, int r2, int w1, int w2)//HP & MP 's percent
     temp.drawRoundRect(barSideWidth, barSideHeight + barDistance, barWidth * w1 / 100, barHeight, barRoundX, barRoundY);
     temp.drawRoundRect(screenWidth * 16 - 1 - barSideWidth - barWidth * w2 / 100, barSideHeight + barDistance, barWidth * w2 / 100, barHeight, barRoundX, barRoundY);
     //paint MP(full ver)
-    std::string dir1 = "..\\QT\\resources\\images\\player\\P1_";
-    std::string dir2 = "..\\QT\\resources\\images\\player\\P2_";
+    std::string dir1 = ":\\resources\\images\\player\\P1_";
+    std::string dir2 = ":\\resources\\images\\player\\P2_";
     if (r1 > 50)dir1 += "stay.png";
     else
         if (r1 > 0)dir1 += "injured_stay.png";
@@ -127,7 +126,7 @@ QImage AllBullet()
 {
     QImage ret(screenWidth * 16, screenHeight * 16, QImage::Format_RGBA8888);
     QPainter temp(&ret);
-    QPixmap img("..\\QT\\resources\\images\\effects\\bullet.png");
+    QPixmap img(":\\resources\\images\\effects\\bullet.png");
     list<__player::bullet>::iterator it = __player::Bullet.begin();
     while (it != __player::Bullet.end())
     {
@@ -140,7 +139,7 @@ QImage AllParticle()
 {
     QImage ret(screenWidth * 16, screenHeight * 16, QImage::Format_RGBA8888);
     QPainter temp(&ret);
-    QPixmap img("..\\QT\\resources\\images\\effects\\particle.png");
+    QPixmap img(":\\resources\\images\\effects\\particle.png");
     list<__player::particle>::iterator it = __player::Particle.begin();
     while (it != __player::Particle.end())
     {
@@ -154,13 +153,13 @@ void MainWindow::paintEvent(QPaintEvent *)
     QPainter painter(this);
     if (gameStatus == __gameTick::menu)
     {
-        QPixmap bg("..\\QT\\resources\\images\\other\\start.png");
+        QPixmap bg(":\\resources\\images\\other\\start.png");
         painter.drawPixmap(0, 0, MainWindow::width(), MainWindow::height(), bg);
         return;
     }
     if (gameStatus == __gameTick::mapset)
     {
-        std::string dir = "..\\QT\\resources\\images\\other\\";
+        std::string dir = ":\\resources\\images\\other\\";
         dir += std::to_string(__gameMap::tmpThemeId) + ".png";
         QPixmap bg(dir.c_str());
         painter.drawPixmap(0, 0, MainWindow::width(), MainWindow::height(), bg);
@@ -188,12 +187,12 @@ void MainWindow::paintEvent(QPaintEvent *)
         temp.drawPixmap(0, 0, st);// paint players' state
         if (gameStatus == __gameTick::paused)
         {
-            QPixmap ps("..\\QT\\resources\\images\\other\\pause.png");
+            QPixmap ps(":\\resources\\images\\other\\pause.png");
             temp.drawPixmap(0, 0, ps);// paint the pause picture
         }
         if (gameStatus == __gameTick::endGame)
         {
-            std::string dir = "..\\QT\\resources\\images\\other\\over";
+            std::string dir = ":\\resources\\images\\other\\over";
             if (r1 == 0)
                 dir += "2.png";
             else
@@ -274,19 +273,15 @@ MainWindow::MainWindow(QWidget *parent)
     setFixedSize(1280,960);
     gameClock->start(timePerTick);
     connect(gameClock, SIGNAL(timeout()), this, SLOT(GlobalTick()));
-    setWindowIcon(QIcon("..\\QT\\resources\\images\\icon\\logo.ico"));
-    crashSound = new QSound("..\\QT\\resources\\sound\\crash.wav");
-    shootSound = new QSound("..\\QT\\resources\\sound\\shoot.wav");
-    jumpSound = new QSound("..\\QT\\resources\\sound\\jump.wav");
-    fallSound = new QSound("..\\QT\\resources\\sound\\fall.wav");
-    deadSound = new QSound("..\\QT\\resources\\sound\\dead.wav");
-    QMediaPlayer *BGM = new QMediaPlayer(this);//设置背景音乐
-    QMediaPlaylist *BGMList = new QMediaPlaylist(this);
-    BGMList->addMedia(QUrl::fromLocalFile("..\\QT\\resources\\sound\\bgm.wav"));
-    BGMList -> setPlaybackMode(QMediaPlaylist::Loop);
-    BGM -> setPlaylist(BGMList);
-    BGM -> setVolume(50);
-    BGM -> play();
+    setWindowIcon(QIcon(":\\resources\\images\\icon\\logo.ico"));
+    crashSound = new QSound(":\\resources\\sound\\crash.wav");
+    shootSound = new QSound(":\\resources\\sound\\shoot.wav");
+    jumpSound = new QSound(":\\resources\\sound\\jump.wav");
+    fallSound = new QSound(":\\resources\\sound\\fall.wav");
+    deadSound = new QSound(":\\resources\\sound\\dead.wav");
+    BGMSound = new QSound(":\\resources\\sound\\bgm.wav");
+    BGMSound -> setLoops(QSound::Infinite);
+    BGMSound -> play();
 }
 
 MainWindow::~MainWindow()

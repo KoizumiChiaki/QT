@@ -1,7 +1,7 @@
 #ifndef _QTHWK_CONSTANTS_H_
 #define _QTHWK_CONSTANTS_H_
 
-const int timePerTick = 5;
+const int timePerTick = 15;
 //the number of ms per tick
 const int screenWidth = 48, screenHeight = 36;
 const unsigned int tps = 60;

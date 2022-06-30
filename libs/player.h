@@ -372,7 +372,7 @@ namespace __player
         QImage GetPlayerState()
         {
             QImage ret(screenWidth * 16, screenHeight * 16, QImage::Format_RGBA8888);
-            std::string dir = "..\\QT\\resources\\images\\player\\";
+            std::string dir = ":\\resources\\images\\player\\";
             if(ID==1)dir+="P1_";
             else dir+="P2_";
             if(Hp<=MaxHp/2)dir+="injured_";

@@ -5,7 +5,6 @@
 #include <QKeyEvent>
 #include <QTimer>
 #include <QSound>
-#include <QMediaPlayer>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -32,6 +31,6 @@ public slots:
     void GlobalTick();
 private:
     Ui::MainWindow *ui;
-    QSound *crashSound, *shootSound, *jumpSound, *fallSound, *deadSound;
+    QSound *crashSound, *shootSound, *jumpSound, *fallSound, *deadSound, *BGMSound;
 };
 #endif // MAINWINDOW_H
