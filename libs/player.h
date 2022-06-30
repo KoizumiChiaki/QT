@@ -97,7 +97,7 @@ namespace __player
             Hp = MaxHp , Mp = MaxMp;
             inDash = false;
         }
-        void Hurt(int num){TRedCd=3;Hp=max(0,Hp-num);}
+        void Hurt(int num){TRedCd=10;Hp=max(0,Hp-num);}
         bool checkhit(bullet tmp)
         {
             if(tmp.posX>=posX&&tmp.posX<=posX+playerheight
@@ -304,7 +304,7 @@ namespace __player
         {
             if(gameMap.getBlockType(int(posX+playerheight/2),int(posY+playerheight/2)) == liquid)
             {
-                if(nowTheme == nether&&!ContactCd)Hurt(5),ContactCd=10;
+                if(nowTheme == nether&&!ContactCd)Hurt(5),ContactCd=30;
                 return 1;
             }
             return 0;
@@ -312,7 +312,7 @@ namespace __player
         void checkcactus()
         {
             if(gameMap.getBlockId(int(posX+playerheight/2),int(posY+playerheight/2))==1)
-                if(!ContactCd)Hurt(5),ContactCd=10;
+                if(!ContactCd)Hurt(5),ContactCd=30;
         }
         // decrease X exponently
         void diminishX()
@@ -327,7 +327,7 @@ namespace __player
             if(HurtCd) HurtCd--;
             if(ContactCd) ContactCd--;
             if(DashCd) DashCd--;
-            if(DashCd<5) inDash=0;
+            if(DashCd<10) inDash=0;
             if(BulletCd) BulletCd--;
             double LposX = posX,LposY = posY;
             if(!inDash)vY -= gravity / tps;
