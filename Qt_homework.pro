@@ -32,3 +32,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 RESOURCES += \
     resources/Resources.qrc
+
+RC_FILE = resources/images/icon/ico.rc
